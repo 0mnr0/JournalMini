@@ -1,0 +1,58 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
+    id 'com.google.firebase.firebase-perf' version '1.4.2' apply true
+
+}
+
+android {
+    namespace 'com.svl.journalmini'
+    compileSdk 34
+
+
+    defaultConfig {
+        applicationId "com.svl.journalmini"
+        minSdk 27
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation libs.firebase.crashlytics
+    implementation libs.google.firebase.perf
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    implementation libs.glide
+    androidTestImplementation libs.espresso.core
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation(platform(libs.firebase.bom))
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
+    implementation 'com.github.MackHartley:RoundedProgressBar:3.0.0'
+    implementation "com.google.firebase:firebase-core:21.1.1"
+
+}

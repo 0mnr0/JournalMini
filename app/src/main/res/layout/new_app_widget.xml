@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.JournalMini.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="13dp"
+    android:theme="@style/Theme.JournalMini.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/LessonFirst"
+        style="@style/Widget.JournalMini.AppWidget.InnerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="Пара 1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/FirstLessonTimeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/LessonFirst"
+        android:layout_alignEnd="@+id/LessonFirst"
+        android:layout_marginTop="0dp"
+        android:padding="2dp"
+        android:text="09:00"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/LessonSecond"
+        style="@style/Widget.JournalMini.AppWidget.InnerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LessonFirst"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="Пара 2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/SecondLessonTimeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/LessonSecond"
+        android:layout_alignEnd="@+id/LessonSecond"
+        android:padding="2dp"
+        android:text="10:40"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/LessonThird"
+        style="@style/Widget.JournalMini.AppWidget.InnerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LessonSecond"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="Пара 3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ThirdLessonTimeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/LessonThird"
+        android:layout_alignEnd="@+id/LessonThird"
+        android:padding="2dp"
+        android:text="12:40"
+        android:textColor="#FFFFFF" />
+
+
+    <TextView
+        android:id="@+id/LessonFourth"
+        style="@style/Widget.JournalMini.AppWidget.InnerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LessonThird"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="Пара 4"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/FourthLessonTimeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/LessonFourth"
+        android:layout_alignEnd="@+id/LessonFourth"
+        android:padding="2dp"
+        android:text="14:10"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/LastTimeUpdated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:text="LastTimeWidgetUpdated" />
+
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169654824580",
+    "project_id": "journalmini-1e1fa",
+    "storage_bucket": "journalmini-1e1fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169654824580:android:bf894a478bde137c3d5cd1",
+        "android_client_info": {
+          "package_name": "com.svl.journalmini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVV_vPoO-njK9czDM69SHLZxc74by3uNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

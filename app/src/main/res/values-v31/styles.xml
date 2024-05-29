@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Widget.JournalMini.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">@drawable/app_widget_background</item>
+        <item name="android:clipToOutline">true</item>
+    </style>
+
+    <style name="Widget.JournalMini.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">@drawable/app_widget_inner_view_background</item>
+    </style>
+</resources>

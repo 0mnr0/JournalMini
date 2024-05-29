@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:background="#00000000"
+    android:foreground="@drawable/shedule_border"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/StudentImage"
+        android:layout_width="62dp"
+        android:layout_height="0dp"
+        android:onClick="ShowStudentImage"
+        app:layout_constraintBottom_toBottomOf="@+id/GamePoints"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/example_appwidget_preview" />
+
+    <TextView
+        android:id="@+id/StudentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="1. StudentName"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/StudentImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/GamePoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="GamePoints"
+        android:textColor="#E19494"
+        app:layout_constraintStart_toEndOf="@+id/StudentImage"
+        app:layout_constraintTop_toBottomOf="@+id/StudentName" />
+
+    <ImageView
+        android:id="@+id/top_coin_image"
+        android:layout_width="14dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/GamePoints"
+        app:layout_constraintStart_toEndOf="@+id/GamePoints"
+        app:layout_constraintTop_toTopOf="@+id/GamePoints"
+        app:srcCompat="@drawable/top_money" />
+</androidx.constraintlayout.widget.ConstraintLayout>
