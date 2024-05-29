@@ -545,6 +545,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onTaskCompleted(String result) {
+        Log.d("SendDataTask", "onTaskCompleted: " + result);
         int ReturnCode = Integer.parseInt(result.split("\\|")[0]);
         String ReturnValue = result.split("\\|")[1];
         String UrlQuestion = result.split("\\|")[2];
