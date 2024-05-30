@@ -94,7 +94,15 @@ public class MainActivity extends AppCompatActivity {
         JournalText.setTextColor(GetMonetLite());
         TextView MadedPercents = findViewById(R.id.MadedPercents);
         MadedPercents.setTextColor(GetMonetLite());
+        TextView CurrentDayInSchedule = findViewById(R.id.SheduleDayDisplaying);
+        CurrentDayInSchedule.setTextColor(GetMonetLite());
+        Button PreviousDayShedule = findViewById(R.id.PreviousDayShedule);
+        PreviousDayShedule.setBackgroundColor(GetMonetViewBackground());
+        PreviousDayShedule.setTextColor(GetMonetLite());
 
+        Button NextDaySchedule = findViewById(R.id.NextDayShedule);
+        NextDaySchedule.setBackgroundColor(GetMonetViewBackground());
+        NextDaySchedule.setTextColor(GetMonetLite());
     }
 
     public int ColorUtils(int Color1, int Color2){
