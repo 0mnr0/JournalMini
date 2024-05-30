@@ -97,14 +97,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin"
-        tools:ignore="NotSibling" />
+        tools:ignore="NotSibling"
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="AccountBlock,MainPageLaypout" />
+        app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -124,7 +126,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/FullNameText"
@@ -174,7 +177,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountBlock"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="NotSibling">
+        tools:ignore="NotSibling"
+        tools:visibility="visible">
 
         <ScrollView
             android:layout_width="match_parent"
