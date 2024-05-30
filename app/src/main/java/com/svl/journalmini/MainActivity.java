@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     public void ProcessShedule(String SheduleVar){
+        Log.d("ProcessShedule", SheduleVar);
         dataList.clear();
         adapter.notifyDataSetChanged();
 
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
         LoginBar.setVisibility(View.GONE);
         TextView GroupName = findViewById(R.id.GroupName);
         GroupName.setText(GroupNameInCode);
-        LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+(Day+1);
+        LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
     }
 
