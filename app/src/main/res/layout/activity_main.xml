@@ -126,8 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:ignore="MissingConstraints"
-        tools:visibility="visible">
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/FullNameText"
@@ -177,8 +176,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountBlock"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="NotSibling"
-        tools:visibility="visible">
+        tools:ignore="NotSibling">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -499,6 +497,22 @@
                     android:padding="8dp"
                     android:paddingBottom="24dp">
 
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/ScheduleDaySelection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="PreviousDayShedule,SheduleDayDisplaying,NextDayShedule" />
+
+                    <Button
+                        android:id="@+id/SheduleAndExams"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:onClick="ShowExams"
+                        android:text="Показать экзамены"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <Button
                         android:id="@+id/PreviousDayShedule"
                         android:layout_width="wrap_content"
@@ -508,8 +522,9 @@
                         android:text="-1 День"
                         android:textColor="#FFFFFF"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
+                        app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
+                        tools:ignore="HardcodedText"
+                        tools:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/SheduleDayDisplaying"
@@ -519,7 +534,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/PreviousDayShedule"
                         app:layout_constraintEnd_toStartOf="@+id/NextDayShedule"
                         app:layout_constraintStart_toEndOf="@+id/PreviousDayShedule"
-                        app:layout_constraintTop_toTopOf="@+id/PreviousDayShedule" />
+                        app:layout_constraintTop_toTopOf="@+id/PreviousDayShedule"
+                        tools:visibility="invisible" />
 
                     <Button
                         android:id="@+id/NextDayShedule"
@@ -530,17 +546,20 @@
                         android:text="+1 День"
                         android:textColor="#FFFFFF"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
+                        app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
+                        tools:ignore="HardcodedText"
+                        tools:visibility="invisible" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/PreviousDayShedule"
-                        tools:layout_editor_absoluteX="8dp">
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:visibility="invisible">
 
                     </androidx.recyclerview.widget.RecyclerView>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView

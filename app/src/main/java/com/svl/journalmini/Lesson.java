@@ -8,6 +8,8 @@ public class Lesson {
     private String teacher_name;
     private String subject_name;
     private String room_name;
+    private String spec;
+
 
     public Lesson() {
         // Пустой конструктор нужен для Gson
@@ -68,5 +70,14 @@ public class Lesson {
     public void setRoom_name(String room_name) {
         this.room_name = room_name;
     }
+
+    public String getExamDate() {
+        return date;
+    }
+
+    public String getExamName() {
+        return spec;
+    }
+
 }
 

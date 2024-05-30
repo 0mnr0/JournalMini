@@ -79,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
+    public void updateMonetColors(){
+        Button SheduleAndExams = findViewById(R.id.SheduleAndExams);
+        SheduleAndExams.setBackgroundColor(GetMonetViewBackground());
+        SheduleAndExams.setTextColor(GetMonetLite());
+
+    }
+
     public int ColorUtils(int Color1, int Color2){
         return (ColorUtils.blendARGB(Color1, Color2, 0.5F));
     }
@@ -171,6 +178,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ProcessShedule", SheduleVar);
         dataList.clear();
         adapter.notifyDataSetChanged();
+        Group ScheduleDaySelection = findViewById(R.id.ScheduleDaySelection);
+        ScheduleDaySelection.setVisibility(View.VISIBLE);
+        Button ShowExamsBtn = findViewById(R.id.SheduleAndExams);
+        ShowExamsBtn.setText("Показать экзамены");
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Lesson>>() {}.getType();
@@ -181,6 +192,16 @@ public class MainActivity extends AppCompatActivity {
         for (Lesson lesson : lessons) {
             dataList.add(new DataModel(lesson.getSubject_name(), lesson.getTeacher_name(), lesson.getFinished_at(), lesson.getStarted_at()+" - ", lesson.getRoom_name()));
             adapter.notifyDataSetChanged();
+        }
+        LoadingBar(false);
+    }
+
+    public void LoadingBar(boolean visible){
+        ProgressBar LoginBar = findViewById(R.id.progressBar);
+        if (visible){
+            LoginBar.setVisibility(View.VISIBLE);
+        } else {
+            LoginBar.setVisibility(View.GONE);
         }
     }
 
@@ -346,6 +367,34 @@ public class MainActivity extends AppCompatActivity {
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
     }
 
+    public void ShowExams(View view){
+        LoadingBar(true);
+        Group ScheduleDaySelection = findViewById(R.id.ScheduleDaySelection);
+        ScheduleDaySelection.setVisibility(View.GONE);
+        Button ShowExamsBtn = findViewById(R.id.SheduleAndExams);
+        if (ShowExamsBtn.getText().equals("Показать экзамены")) {
+            ShowExamsBtn.setText("Показать расписание");
+            getData("https://msapi.top-academy.ru/api/v2/dashboard/info/future-exams", "GET", null, Access_Token);
+        } else {
+            getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+
+        }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void ProcessExams(String SheduleVar){
+        dataList.clear();
+        adapter.notifyDataSetChanged();
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Lesson>>() {}.getType();
+        List<Lesson> lessons = gson.fromJson(SheduleVar, listType);
+
+        for (Lesson lesson : lessons) {
+            dataList.add(new DataModel(lesson.getExamName(),"", "", "",  lesson.getExamDate()));
+            adapter.notifyDataSetChanged();
+        }
+        LoadingBar(false);
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     public void LoadStreamLeader(JSONArray jsonArray) throws JSONException {
@@ -425,6 +474,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void getData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token) {
+        if (JSON == null){JSON = new JSONObject() ;}
         SendDataTask_GET getData = new SendDataTask_GET(URL, JSON, Access_Token, this::onTaskCompleted);
         getData.execute();
     }
@@ -470,6 +520,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        updateMonetColors();
 
         LeadRecyclerView = findViewById(R.id.LeaderRecycleView);
         LeadRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -601,6 +654,12 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         JSONArray jsonArray = new JSONArray(ReturnValue);
                         LoadStreamLeader(jsonArray);
+                    }catch (JSONException ignored) {}
+                    break;
+                case "https://msapi.top-academy.ru/api/v2/dashboard/info/future-exams":
+                    try {
+                        JSONArray jsonArray = new JSONArray(ReturnValue);
+                        ProcessExams(String.valueOf(jsonArray));
                     }catch (JSONException ignored) {}
                     break;
             }
