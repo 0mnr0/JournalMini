@@ -97,7 +97,7 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,GitButton"
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,GitButton"
         tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
