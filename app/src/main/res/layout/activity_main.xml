@@ -76,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:cursorVisible="false"
+        android:padding="10dp"
         android:text="Вход"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +89,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -96,17 +97,15 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin"
-        tools:ignore="NotSibling"
-        tools:visibility="gone" />
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,imageView2"
+        tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
-        tools:visibility="visible" />
+        app:constraint_referenced_ids="AccountBlock,MainPageLaypout" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -615,5 +614,16 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.75" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="OpenRepository"
+        app:layout_constraintBottom_toTopOf="@+id/ErrorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/github" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

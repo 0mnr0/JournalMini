@@ -3,9 +3,11 @@ package com.svl.journalmini;
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +45,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
     private StudentAdapter Studapter;
     private List<Student> studentList;
 
+    public void OpenRepository(View view){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases/tag/Public"));
+        startActivity(browserIntent);
+    }
 
     public void showtoast(Object text){
         Toast.makeText(getApplicationContext(), text.toString(),
@@ -83,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         Button SheduleAndExams = findViewById(R.id.SheduleAndExams);
         SheduleAndExams.setBackgroundColor(GetMonetViewBackground());
         SheduleAndExams.setTextColor(GetMonetLite());
+        TextView JournalText = findViewById(R.id.JournalPreview);
+        JournalText.setTextColor(GetMonetLite());
 
     }
 
