@@ -65,7 +65,7 @@
         android:layout_marginRight="24dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:inputType="text|textPassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
+        android:inputType="text|textVisiblePassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,16 +98,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,GitButton"
-        tools:ignore="NotSibling"
-        tools:visibility="gone" />
+        tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
-        tools:visibility="visible" />
+        app:constraint_referenced_ids="AccountBlock,MainPageLaypout" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -126,13 +124,11 @@
         android:id="@+id/AccountBlock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:visibility="visible">
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/FullNameText"
@@ -194,8 +190,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountBlock"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="NotSibling"
-        tools:visibility="visible">
+        tools:ignore="NotSibling">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -244,9 +239,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/AvgProcessDecription"
                         app:layout_constraintTop_toTopOf="@+id/AvgProcessDecription"
-                        app:rpbBackgroundColor="#43AA8B"
+                        app:rpbBackgroundColor="#254441"
                         app:rpbCornerRadius="20dp"
-                        app:rpbProgressColor="#254441"
+                        app:rpbProgressColor="#43AA8B"
                         app:rpbShowProgressText="false">
 
                     </com.mackhartley.roundedprogressbar.RoundedProgressBar>
@@ -267,9 +262,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/AvgMarkDecription"
                         app:layout_constraintTop_toTopOf="@+id/guideline4"
-                        app:rpbBackgroundColor="#AA4343"
+                        app:rpbBackgroundColor="#613535"
                         app:rpbCornerRadius="20dp"
-                        app:rpbProgressColor="#442525"
+                        app:rpbProgressColor="#AA4343"
                         app:rpbShowProgressText="false">
 
                     </com.mackhartley.roundedprogressbar.RoundedProgressBar>
@@ -610,8 +605,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"
