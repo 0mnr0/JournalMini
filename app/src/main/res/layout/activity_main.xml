@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#121212"
+    android:background="#A82A2A"
     tools:context=".MainActivity">
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_marginBottom="130dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:inputType="text|textShortMessage|textAutoComplete"
+        android:inputType="text|textWebEmailAddress|textAutoComplete|textAutoCorrect"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
         android:layout_marginRight="24dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:inputType="text|textVisiblePassword|textAutoComplete"
+        android:inputType="text|textWebPassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -97,7 +97,7 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,imageView2"
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,GitButton,imageView3"
         tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
@@ -616,7 +616,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/GitButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginRight="10dp"
@@ -625,5 +625,15 @@
         app:layout_constraintBottom_toTopOf="@+id/ErrorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/github" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/PasswordText"
+        app:layout_constraintStart_toEndOf="@+id/PasswordText"
+        app:layout_constraintTop_toTopOf="@+id/PasswordText"
+        app:srcCompat="@drawable/eye_show_regular_icon_203603" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
