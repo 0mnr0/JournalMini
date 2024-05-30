@@ -65,7 +65,7 @@
         android:layout_marginRight="24dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:inputType="text|textWebPassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
+        android:inputType="text|textPassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,15 +97,17 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,GitButton,imageView3"
-        tools:ignore="NotSibling" />
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,imageView,GitButton"
+        tools:ignore="NotSibling"
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="AccountBlock,MainPageLaypout" />
+        app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -124,8 +126,13 @@
         android:id="@+id/AccountBlock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:visibility="gone"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/FullNameText"
@@ -163,6 +170,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/exit_logo" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -175,7 +183,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountBlock"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="NotSibling">
+        tools:ignore="NotSibling"
+        tools:visibility="visible">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -422,6 +431,15 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+                        <TextView
+                            android:id="@+id/MadedPercents"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/hw_progress"
+                            app:layout_constraintStart_toStartOf="@+id/hw_progress"
+                            app:layout_constraintTop_toTopOf="@+id/hw_progress" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -580,7 +598,8 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"
@@ -625,15 +644,5 @@
         app:layout_constraintBottom_toTopOf="@+id/ErrorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/github" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/PasswordText"
-        app:layout_constraintStart_toEndOf="@+id/PasswordText"
-        app:layout_constraintTop_toTopOf="@+id/PasswordText"
-        app:srcCompat="@drawable/eye_show_regular_icon_203603" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

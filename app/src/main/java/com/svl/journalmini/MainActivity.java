@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         SheduleAndExams.setTextColor(GetMonetLite());
         TextView JournalText = findViewById(R.id.JournalPreview);
         JournalText.setTextColor(GetMonetLite());
+        TextView MadedPercents = findViewById(R.id.MadedPercents);
+        MadedPercents.setTextColor(GetMonetLite());
 
     }
 
@@ -287,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
         HomeWorkProgress.setBackgroundProgressBarWidth(15F);
         int CookedHomeworks = 0;
         int NotCooked = 0;
+        int totalHomeworks = 0;
         TextView MissedHW  = findViewById(R.id.MissedHWs);
         TextView CheckedHW  = findViewById(R.id.CheckedHWs);
         TextView CheckingHW = findViewById(R.id.OnCheckingHWs);
@@ -298,28 +301,36 @@ public class MainActivity extends AppCompatActivity {
             switch (jsonObject.getInt("counter_type")) {
                 case 0://Missed
                     MissedHW.setText("Просрочено: "+jsonObject.getInt("counter"));
-                    NotCooked += (jsonObject.getInt("counter"));
+                    NotCooked += jsonObject.getInt("counter");
+                    totalHomeworks+= jsonObject.getInt("counter");
                     break;
                 case 1://Maded and Checked
                     CheckedHW.setText("Проверено: "+jsonObject.getInt("counter"));
-                    CookedHomeworks += (jsonObject.getInt("counter"));
+                    CookedHomeworks += jsonObject.getInt("counter");
+                    totalHomeworks+= jsonObject.getInt("counter");
                     break;
                 case 2://Checking
                     CheckingHW.setText("На проверке: "+jsonObject.getInt("counter"));
-                    CookedHomeworks += (jsonObject.getInt("counter"));
+                    CookedHomeworks += jsonObject.getInt("counter");
+                    totalHomeworks+= jsonObject.getInt("counter");
                     break;
                 case 3://Need To COok
                     MissingHW.setText("Текущие: "+jsonObject.getInt("counter"));
-                    NotCooked += (jsonObject.getInt("counter"));
+                    NotCooked += jsonObject.getInt("counter");
+                    totalHomeworks+= jsonObject.getInt("counter");
                     break;
                 case 5://Cooked wrong
                     CookedWrong.setText("Принято: "+jsonObject.getInt("counter"));
-                    CookedHomeworks += (jsonObject.getInt("counter"));
+                    CookedHomeworks += jsonObject.getInt("counter");
+                    totalHomeworks+= jsonObject.getInt("counter");
                     break;
             }
         }
         HomeWorkProgress.setProgressMax(CookedHomeworks + NotCooked);
         HomeWorkProgress.setProgressWithAnimation(CookedHomeworks, 1800L);
+        double CookedInPercents = Math.round(((double) CookedHomeworks /totalHomeworks * 100)*10.0)/10.0;
+        TextView MadedPercents = findViewById(R.id.MadedPercents);
+        MadedPercents.setText(CookedInPercents+"%");
         MissedHW.setVisibility(View.VISIBLE);
         new Handler().postDelayed(() -> CheckingHW.setVisibility(View.VISIBLE), 200);
         new Handler().postDelayed(() -> CheckedHW.setVisibility(View.VISIBLE), 400);
