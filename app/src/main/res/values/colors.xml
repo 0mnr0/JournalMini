@@ -8,4 +8,6 @@
     <color name="light_blue_900">#FF01579B</color>
     <color name="MiniSectionColor">#555555</color>
     <color name="GlobalSectionColor">#444444</color>
+    <color name="loginbutton">#5B7C5C</color>
+    <color name="loginbuttontext">#FFFFFF</color>
 </resources>

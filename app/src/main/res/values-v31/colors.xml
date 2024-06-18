@@ -2,4 +2,6 @@
 <resources>
     <color name="MiniSectionColor">@android:color/system_accent2_300</color>
     <color name="GlobalSectionColor">@android:color/system_accent1_100</color>
+    <color name="loginbutton">@android:color/system_accent2_200</color>
+    <color name="loginbuttontext">@android:color/system_accent1_700</color>
 </resources>

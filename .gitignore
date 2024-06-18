@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/build/outputs/apk/debug
+/app/release/baselineProfiles/0/app-release.dm
+/app/release/baselineProfiles/1/app-release.dm
+/app/release/app-release.apk

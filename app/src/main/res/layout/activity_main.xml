@@ -71,17 +71,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PasswordText" />
 
-    <Button
+    <ImageView
         android:id="@+id/ButtonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:cursorVisible="false"
-        android:padding="10dp"
-        android:text="Вход"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordID" />
+        app:layout_constraintTop_toBottomOf="@+id/PasswordID"
+        app:srcCompat="@drawable/loginbuttonstyle" />
+
+    <TextView
+        android:id="@+id/ButtonLoginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alatsi"
+        android:text="Войти"
+        android:textColor="@color/loginbuttontext"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="186dp"
+        tools:layout_editor_absoluteY="694dp" />
 
     <TextView
         android:id="@+id/ErrorText"
@@ -97,7 +108,7 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,GitButton"
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,ButtonLoginText,GitButton"
         tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group

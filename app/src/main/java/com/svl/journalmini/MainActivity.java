@@ -45,7 +45,6 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    Button LoginButton;
+    ImageView LoginButton;
     EditText LoginID;
     EditText PasswordID;
     TextView LoginText;
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView LeadRecyclerView;
     private StudentAdapter Studapter;
     private List<Student> studentList;
+    boolean CanLogin = true;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases/tag/Public"));
@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showtoast(Object text){
+
+        if (String.valueOf(text).equals("null")) {
+            text = "None";
+        }
         Toast.makeText(getApplicationContext(), text.toString(),
                 Toast.LENGTH_LONG).show();
     }
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             LoginID.setEnabled(true);
             PasswordID.setText(prefs.getString("PassData", null));
             PasswordID.setEnabled(true);
-            LoginButton.setEnabled(true);
+            CanLogin = true;
         }
         Group LoginGroup = findViewById(R.id.EnterGroup);
         LoginGroup.setVisibility(View.VISIBLE);
@@ -391,6 +395,8 @@ public class MainActivity extends AppCompatActivity {
         LoginBar.setVisibility(View.GONE);
         TextView GroupName = findViewById(R.id.GroupName);
         GroupName.setText(GroupNameInCode);
+        AppSettings.set(getApplicationContext(), "ProfileImageLink", AccPhotoURL);
+
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
     }
@@ -537,6 +543,8 @@ public class MainActivity extends AppCompatActivity {
         Trace AppInitStart = FirebasePerformance.getInstance().newTrace("AppInit");
         AppInitStart.start();
 
+
+
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseAnalytics.setAnalyticsCollectionEnabled(true);
         Year = Calendar.getInstance().get(Calendar.YEAR);
@@ -576,8 +584,6 @@ public class MainActivity extends AppCompatActivity {
         LoginText = findViewById(R.id.LoginText);
         PasswordText = findViewById(R.id.PasswordText);
         ErrorText = findViewById(R.id.ErrorText);
-        LoginButton.setBackgroundColor(GetMonetBackground());
-        LoginButton.setTextColor(GetMonetForeground());
         FirebasePerformance.getInstance().setPerformanceCollectionEnabled(true);
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         if (prefs.getString("LoginData", null) != null) {
@@ -613,7 +619,7 @@ public class MainActivity extends AppCompatActivity {
         LoginBar.setVisibility(View.VISIBLE);
         PasswordID.setEnabled(false);
         LoginID.setEnabled(false);
-        LoginButton.setEnabled(false);
+        CanLogin = false;
         JSONObject JSON = new JSONObject();
         try {
             JSON.put("application_key", "6a56a5df2667e65aab73ce76d1dd737f7d1faef9c52e8b8c55ac75f565d8e8a6");
@@ -717,7 +723,7 @@ public class MainActivity extends AppCompatActivity {
             ErrorText.setText(result);
             {
                 PasswordID.setEnabled(true);
-                LoginButton.setEnabled(true);
+                CanLogin = true;
                 LoginID.setEnabled(true);
                 LoginBar.setVisibility(View.GONE);
             }
