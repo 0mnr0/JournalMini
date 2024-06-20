@@ -54,7 +54,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView LoginButton;
+    Button LoginButton;
     EditText LoginID;
     EditText PasswordID;
     TextView LoginText;
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
             Year--;
         }
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
-        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
     }
 
     public void ShowShedulePlus(View view){
@@ -379,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
             Year++;
         }
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
-        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
     }
 
 
@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
         AppSettings.set(getApplicationContext(), "ProfileImageLink", AccPhotoURL);
 
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
-        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
     }
 
     public void ShowExams(View view){
@@ -408,9 +408,9 @@ public class MainActivity extends AppCompatActivity {
         Button ShowExamsBtn = findViewById(R.id.SheduleAndExams);
         if (ShowExamsBtn.getText().equals("Показать экзамены")) {
             ShowExamsBtn.setText("Показать расписание");
-            getData("https://msapi.top-academy.ru/api/v2/dashboard/info/future-exams", "GET", null, Access_Token);
+            getData("https://msapi.top-academy.ru/api/v2/dashboard/info/future-exams", "GET", null, Access_Token, true);
         } else {
-            getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+            getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
 
         }
     }
@@ -485,11 +485,11 @@ public class MainActivity extends AppCompatActivity {
         Group InAccountGroup = findViewById(R.id.InAccountGroup);
         InAccountGroup.setVisibility(View.VISIBLE);
         ErrorText.setText("");
-        getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token);
-        getData("https://msapi.top-academy.ru/api/v2/count/homework", "GET", new JSONObject(), Access_Token);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token);
+        getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token, true);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token, false);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token, false);
+        getData("https://msapi.top-academy.ru/api/v2/count/homework", "GET", new JSONObject(), Access_Token, false);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token, false);
 
 
         if (!TimerLaunched) {
@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    getData("https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter=" + Year + "-" + Month + "-" + Day, "GET", new JSONObject(), Access_Token);
+                    getData("https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter=" + Year + "-" + Month + "-" + Day, "GET", new JSONObject(), Access_Token, false);
                 }
             }, 0, 20 * 60 * 1000);
         }
@@ -507,13 +507,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void getData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token) {
+    public void getData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean useCache) {
         if (JSON == null){JSON = new JSONObject() ;}
-        SendDataTask_GET getData = new SendDataTask_GET(URL, JSON, Access_Token, this::onTaskCompleted);
-        getData.execute();
+        sendData(URL, FETCH_TYPE, JSON, Access_Token, useCache);
     }
-    public void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token) {
-        SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted);
+
+    public void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
+        SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted, UseCache);
         sendDataTask.execute();
     }
 
@@ -521,7 +521,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar LoginBar = findViewById(R.id.progressBar);
         LoginBar.setVisibility(View.VISIBLE);
         Button OpenLeaderGroup = findViewById(R.id.GroupLeader);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-stream", "GET", new JSONObject(), Access_Token);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-stream", "GET", new JSONObject(), Access_Token, true);
         OpenLeaderGroup.setTextColor(GetMonetLite());
         OpenLeaderGroup.setBackgroundColor(GetMonetText());
     }
@@ -529,7 +529,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar LoginBar = findViewById(R.id.progressBar);
         LoginBar.setVisibility(View.VISIBLE);
         Button OpenLeaderStream = findViewById(R.id.LeaderStream);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token, true);
         OpenLeaderStream.setTextColor(GetMonetLite());
         OpenLeaderStream.setBackgroundColor(GetMonetText());
     }
@@ -576,8 +576,6 @@ public class MainActivity extends AppCompatActivity {
         HomeWorkProgress = findViewById(R.id.hw_progress);
         HomeWorkProgress.setProgress(0F);
 
-        View Layout = findViewById(R.id.main);
-        Layout.setBackgroundColor(ColorUtils(GetMonetViewBackground(), Color.parseColor("#000000")));
         LoginButton = findViewById(R.id.ButtonLogin);
         LoginID = findViewById(R.id.LoginID);
         PasswordID = findViewById(R.id.PasswordID);
@@ -593,9 +591,6 @@ public class MainActivity extends AppCompatActivity {
             AccEnterInit();
             myTrace.stop();
         }
-
-        LoginText.setTextColor(GetMonetLite());
-        PasswordText.setTextColor(GetMonetLite());
         LoginButton.setOnClickListener(v -> AccEnterInit());
 
 
@@ -629,7 +624,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        sendData("https://msapi.top-academy.ru/api/v2/auth/login", "POST", JSON, Access_Token);
+        sendData("https://msapi.top-academy.ru/api/v2/auth/login", "POST", JSON, Access_Token, false);
     }
 
     public void onTaskCompleted(String result) {

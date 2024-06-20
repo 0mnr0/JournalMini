@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class SendDataTask extends AsyncTask<Void, Void, String> {
 
@@ -22,28 +23,37 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
     private final JSONObject data;
     private final OnTaskCompleted listener;
     private final String access_Token;
+    private boolean onlyGet;
+    private boolean caching;
 
-    public SendDataTask(String url, String FETCH_TYPE, JSONObject data, String access_Token, OnTaskCompleted listener) {
+    public SendDataTask(String url, String FETCH_TYPE, JSONObject data, String access_Token, OnTaskCompleted listener, boolean UseCache) {
         this.url = url;//URL To Fetch
         this.data = data;// JSON Data include if it not empty
         this.FetchType = FETCH_TYPE;// POST or Get
         this.listener = listener;//Just for another activity
         this.access_Token = access_Token;//Access token that i have
+        this.caching = UseCache;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         try {
+            onlyGet = FetchType.equals("GET");
+
             URL urlObject = new URL(url);
             HttpURLConnection urlConnection = (HttpURLConnection) urlObject.openConnection();
             urlConnection.setRequestMethod(FetchType);
 
 
-
-            //Setting the Headers for correct work
-            urlConnection.setDoInput(!data.toString().equals("{}"));
-            if (urlConnection.getDoInput())urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            if (urlConnection.getDoInput())urlConnection.setRequestProperty("Accept", "application/json");
+            if (!onlyGet) {
+                urlConnection.setDoInput(!data.toString().equals("{}"));
+                if (urlConnection.getDoInput()) {
+                    urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                }
+                if (urlConnection.getDoInput()) {
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                }
+            }
             urlConnection.setRequestProperty("Origin", "https://journal.top-academy.ru");
             urlConnection.setRequestProperty("Referer", "https://journal.top-academy.ru/");
             urlConnection.setRequestProperty("Authorization", "Bearer "+access_Token);
@@ -51,10 +61,10 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
 
 
 
-            if (urlConnection.getDoInput()){//if JSON Data is not empty - send it
+            if (urlConnection.getDoInput() && !onlyGet){
                 urlConnection.setDoOutput(true);
                 OutputStream outputStream = urlConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 bufferedWriter.write(data.toString());
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -65,7 +75,7 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 StringBuilder response = new StringBuilder();
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
@@ -73,9 +83,9 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                return responseCode+"|"+response.toString()+"|"+url;
+                return responseCode+"|"+response+"|"+url;
             } else {
-                return responseCode+"|Error"+"|"+url;
+                return responseCode+"|Error|"+url;
             }
         } catch (IOException e) {
             e.printStackTrace();

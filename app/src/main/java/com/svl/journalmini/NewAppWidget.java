@@ -96,12 +96,8 @@ public class NewAppWidget extends AppWidgetProvider {
 
 
 
-    public static void getData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token) {
-        SendDataTask_GET getData = new SendDataTask_GET(URL, JSON, Access_Token, NewAppWidget::onTaskCompleted);
-        getData.execute();
-    }
-    public static void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token) {
-        SendDataTask sendData = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, NewAppWidget::onTaskCompleted);
+    public static void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
+        SendDataTask sendData = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, NewAppWidget::onTaskCompleted, UseCache);
         sendData.execute();
     }
 
@@ -131,7 +127,7 @@ public class NewAppWidget extends AppWidgetProvider {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        sendData("https://msapi.top-academy.ru/api/v2/auth/login", "POST", JSON, Access_Token);
+        sendData("https://msapi.top-academy.ru/api/v2/auth/login", "POST", JSON, Access_Token, false);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
 
 
@@ -173,7 +169,7 @@ public class NewAppWidget extends AppWidgetProvider {
                     try {
                         JSONObject jsonObject = new JSONObject(ReturnValue);
                         Access_Token=(jsonObject.getString("access_token"));
-                        getData(LastSheduleTime, "GET", new JSONObject(), Access_Token);
+                        sendData(LastSheduleTime, "GET", new JSONObject(), Access_Token, false);
                     } catch (JSONException e) {
                     }
                     break;
