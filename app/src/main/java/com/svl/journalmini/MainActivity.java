@@ -444,7 +444,10 @@ public class MainActivity extends AppCompatActivity {
                 int amount = obj.getInt("amount");
                 String fullName = obj.getString("full_name");
                 String photoPath = obj.getString("photo_path");
-                studentList.add(new Student(fullName, photoPath, amount));
+                Log.d("positionDebugger", String.valueOf(obj.getInt("position")));
+                studentList.add(new Student(fullName, photoPath, amount, obj.getInt("position")));
+            } else {
+                studentList.add(new Student("", "", -1, -1));
             }
         }
         Studapter.notifyDataSetChanged();//
@@ -465,7 +468,7 @@ public class MainActivity extends AppCompatActivity {
                 int amount = obj.getInt("amount");
                 String fullName = obj.getString("full_name");
                 String photoPath = obj.getString("photo_path");
-                studentList.add(new Student(fullName, photoPath, amount));
+                studentList.add(new Student(fullName, photoPath, amount, obj.getInt("position")));
             }
         }
         Studapter.notifyDataSetChanged();

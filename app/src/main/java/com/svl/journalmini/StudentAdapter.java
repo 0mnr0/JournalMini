@@ -1,5 +1,6 @@
 package com.svl.journalmini;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -23,18 +25,21 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         this.studentList = studentList;
     }
 
+    @NonNull
     @Override
     public StudentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leader_layout, parent, false);
         return new StudentViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(StudentViewHolder holder, int position) {
         Student student = studentList.get(position);
         holder.studentName.setText(student.getName());
         holder.gamePoints.setText(String.valueOf(student.getGamePoints()));
         holder.studentImage.setTooltipText(student.getImageUrl());
+        holder.studentPosition.setText("#"+(student.getStudentPosition()));
 
         if (!student.getImageUrl().isEmpty()){
             Glide.with(context)
@@ -49,14 +54,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     public static class StudentViewHolder extends RecyclerView.ViewHolder {
         public ImageView studentImage;
-        public TextView studentName;
-        public TextView gamePoints;
+        public TextView studentName, gamePoints, studentPosition;
 
         public StudentViewHolder(View itemView) {
             super(itemView);
             studentImage = itemView.findViewById(R.id.StudentImage);
             studentName = itemView.findViewById(R.id.StudentName);
             gamePoints = itemView.findViewById(R.id.GamePoints);
+            studentPosition = itemView.findViewById(R.id.studentPosition);
         }
     }
 

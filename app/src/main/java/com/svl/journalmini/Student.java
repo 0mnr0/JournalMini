@@ -4,11 +4,13 @@ public class Student {
     private String name;
     private String imageUrl;
     private int gamePoints;
+    private int position;
 
-    public Student(String name, String imageUrl, int gamePoints) {
+    public Student(String name, String imageUrl, int gamePoints, int pos) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.gamePoints = gamePoints;
+        this.position = pos;
     }
 
     public String getName() {
@@ -21,6 +23,10 @@ public class Student {
 
     public int getGamePoints() {
         return gamePoints;
+    }
+
+    public int getStudentPosition() {
+        return position;
     }
 }
 
