@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -11,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.List;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentViewHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
     private List<Student> studentList;
     private Context context;
 
@@ -36,13 +39,25 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentViewHolder> {
         if (!student.getImageUrl().isEmpty()){
             Glide.with(context)
                     .load(student.getImageUrl())
-                    .transform(new CenterCrop(), new RoundedCorners(20))
+                    .transform(new CenterCrop(), new RoundedCorners(18))
                     .into(holder.studentImage);
         }
     }
 
     @Override
-    public int getItemCount() {
-        return studentList.size();
+    public int getItemCount() {return studentList.size();}
+
+    public static class StudentViewHolder extends RecyclerView.ViewHolder {
+        public ImageView studentImage;
+        public TextView studentName;
+        public TextView gamePoints;
+
+        public StudentViewHolder(View itemView) {
+            super(itemView);
+            studentImage = itemView.findViewById(R.id.StudentImage);
+            studentName = itemView.findViewById(R.id.StudentName);
+            gamePoints = itemView.findViewById(R.id.GamePoints);
+        }
     }
+
 }
