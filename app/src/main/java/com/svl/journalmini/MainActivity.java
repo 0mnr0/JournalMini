@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
         Button SheduleAndExams = findViewById(R.id.SheduleAndExams);
         SheduleAndExams.setBackgroundColor(GetMonetViewBackground());
         SheduleAndExams.setTextColor(GetMonetLite());
-        TextView JournalText = findViewById(R.id.JournalPreview);
-        JournalText.setTextColor(GetMonetLite());
         TextView MadedPercents = findViewById(R.id.MadedPercents);
         MadedPercents.setTextColor(GetMonetLite());
         TextView CurrentDayInSchedule = findViewById(R.id.SheduleDayDisplaying);
@@ -438,15 +436,18 @@ public class MainActivity extends AppCompatActivity {
         OpenLeaderStream.setBackgroundColor(GetMonetLite());
         OpenLeaderStream.setTextColor(GetMonetText());
         studentList.clear();
+
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-
-            String fullName = obj.getString("full_name");
-            String photoPath = obj.getString("photo_path");
-            int amount = obj.getInt("amount");
-            studentList.add(new Student(fullName, photoPath, amount));
+            Object isNotEmpty = obj.get("amount");
+            if (isNotEmpty != JSONObject.NULL) {
+                int amount = obj.getInt("amount");
+                String fullName = obj.getString("full_name");
+                String photoPath = obj.getString("photo_path");
+                studentList.add(new Student(fullName, photoPath, amount));
+            }
         }
-        Studapter.notifyDataSetChanged();
+        Studapter.notifyDataSetChanged();//
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -459,11 +460,13 @@ public class MainActivity extends AppCompatActivity {
         studentList.clear();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-
-            String fullName = obj.getString("full_name");
-            String photoPath = obj.getString("photo_path");
-            int amount = obj.getInt("amount");
-            studentList.add(new Student(fullName, photoPath, amount));
+            Object isNotEmpty = obj.get("amount");
+            if (isNotEmpty != JSONObject.NULL) {
+                int amount = obj.getInt("amount");
+                String fullName = obj.getString("full_name");
+                String photoPath = obj.getString("photo_path");
+                studentList.add(new Student(fullName, photoPath, amount));
+            }
         }
         Studapter.notifyDataSetChanged();
     }
@@ -477,8 +480,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("LastSucsessfulAccessToken",Access_Token);
             editor.apply();
         }
-        TextView AccNameView = findViewById(R.id.FullNameText);
-        AccNameView.setTextColor(GetMonetLite());
         ClearEnters();
         Group LoginGroup = findViewById(R.id.EnterGroup);
         LoginGroup.setVisibility(View.GONE);

@@ -33,10 +33,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentViewHolder> {
         holder.gamePoints.setText(String.valueOf(student.getGamePoints()));
         holder.studentImage.setTooltipText(student.getImageUrl());
 
-        Glide.with(context)
-                .load(student.getImageUrl())
-                .transform(new CenterCrop(), new RoundedCorners(20))
-                .into(holder.studentImage);
+        if (!student.getImageUrl().isEmpty()){
+            Glide.with(context)
+                    .load(student.getImageUrl())
+                    .transform(new CenterCrop(), new RoundedCorners(20))
+                    .into(holder.studentImage);
+        }
     }
 
     @Override
