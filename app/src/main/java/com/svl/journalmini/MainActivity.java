@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
@@ -42,19 +44,27 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.onurkagan.ksnack_lib.Animations.Fade;
+import com.onurkagan.ksnack_lib.Animations.Slide;
+import com.onurkagan.ksnack_lib.KSnack.KSnack;
+import com.onurkagan.ksnack_lib.KSnack.KSnackBarEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LastVersionParser.TextFetchListener {
     Button LoginButton;
     EditText LoginID;
     EditText PasswordID;
@@ -472,6 +482,12 @@ public class MainActivity extends AppCompatActivity {
         Studapter.notifyDataSetChanged();
     }
 
+    public void CheckAppUpdates(){
+        LastVersionParser textFetcher = new LastVersionParser();
+        textFetcher.fetchTextFromUrl("https://raw.githubusercontent.com/0mnr0/JournalMini/master/app/sampledata/publicVersion.info", this);
+    }
+
+
     public void SucsessfulLogin() {
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -489,6 +505,8 @@ public class MainActivity extends AppCompatActivity {
         Group InAccountGroup = findViewById(R.id.InAccountGroup);
         InAccountGroup.setVisibility(View.VISIBLE);
         ErrorText.setText("");
+
+        CheckAppUpdates();
         getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token, true);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token, false);
@@ -734,6 +752,29 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+
+
+    @Override
+    public void onTextFetched(String text) {
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+            String version = pInfo.versionName;
+            text = text.replace("\n","");
+            if (!text.equals(version)){
+                KSnack kSnack = new KSnack(MainActivity.this);
+                kSnack.setAction("Сюда", v -> {OpenRepository(null); kSnack.dismiss();})
+                        .setMessage("А у меня есть обновление :)") // message
+                        .setTextColor(R.color.SnackbarForeground) // message text color
+                        .setBackColor(R.color.SnackbarBackground) // background color
+                        .setButtonTextColor(R.color.SnackbarForeground) // action button text color
+                        .setAnimation(Slide.Up.getAnimation(kSnack.getSnackView()), Slide.Down.getAnimation(kSnack.getSnackView()))
+                        .setDuration(3000) // you can use for auto close.
+                        .show();
+
+            }
+        } catch (Exception ignored) {}
     }
 
 
