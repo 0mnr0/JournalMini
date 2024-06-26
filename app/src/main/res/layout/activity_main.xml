@@ -113,14 +113,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,GitButton,ButtonLogin,RememberMe"
-        tools:ignore="NotSibling" />
+        tools:ignore="NotSibling"
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="AccountBlock,MainPageLaypout" />
+        app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -143,7 +145,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/FullNameText"
@@ -205,7 +208,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountBlock"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="NotSibling">
+        tools:ignore="NotSibling"
+        tools:visibility="visible">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -536,8 +540,7 @@
                     android:layout_margin="4dp"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/section_border"
-                    android:padding="4dp"
-                    android:paddingBottom="24dp">
+                    android:padding="8dp">
 
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/ScheduleDaySelection"
@@ -565,8 +568,7 @@
                         android:textColor="#FFFFFF"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
-                        tools:ignore="HardcodedText"
-                        tools:visibility="invisible" />
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/SheduleDayDisplaying"
@@ -576,8 +578,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/PreviousDayShedule"
                         app:layout_constraintEnd_toStartOf="@+id/NextDayShedule"
                         app:layout_constraintStart_toEndOf="@+id/PreviousDayShedule"
-                        app:layout_constraintTop_toTopOf="@+id/PreviousDayShedule"
-                        tools:visibility="invisible" />
+                        app:layout_constraintTop_toTopOf="@+id/PreviousDayShedule" />
 
                     <Button
                         android:id="@+id/NextDayShedule"
@@ -589,16 +590,14 @@
                         android:textColor="#FFFFFF"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
-                        tools:ignore="HardcodedText"
-                        tools:visibility="invisible" />
+                        tools:ignore="HardcodedText" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/PreviousDayShedule"
-                        tools:layout_editor_absoluteX="8dp"
-                        tools:visibility="invisible">
+                        tools:layout_editor_absoluteX="8dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
