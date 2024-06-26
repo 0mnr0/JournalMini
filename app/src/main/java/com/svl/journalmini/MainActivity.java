@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -444,10 +445,7 @@ public class MainActivity extends AppCompatActivity {
                 int amount = obj.getInt("amount");
                 String fullName = obj.getString("full_name");
                 String photoPath = obj.getString("photo_path");
-                Log.d("positionDebugger", String.valueOf(obj.getInt("position")));
                 studentList.add(new Student(fullName, photoPath, amount, obj.getInt("position")));
-            } else {
-                studentList.add(new Student("", "", -1, -1));
             }
         }
         Studapter.notifyDataSetChanged();//
@@ -477,7 +475,9 @@ public class MainActivity extends AppCompatActivity {
     public void SucsessfulLogin() {
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        if (!LoginID.getText().toString().isEmpty() && !PasswordID.getText().toString().isEmpty()) {
+
+        CheckBox RememberPassword = findViewById(R.id.RememberMe);
+        if (!LoginID.getText().toString().isEmpty() && !PasswordID.getText().toString().isEmpty() && !RememberPassword.isChecked()) {
             editor.putString("LoginData", LoginID.getText().toString());
             editor.putString("PassData", PasswordID.getText().toString());
             editor.putString("LastSucsessfulAccessToken",Access_Token);

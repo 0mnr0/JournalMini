@@ -4,4 +4,11 @@
     <color name="GlobalSectionColor">@android:color/system_accent1_100</color>
     <color name="loginbutton">@android:color/system_accent2_200</color>
     <color name="loginbuttontext">@android:color/system_accent1_700</color>
+    <color name="constraintBgColor">@android:color/system_accent2_900</color>
+    <color name="loginTextColor">@android:color/system_accent1_50</color>
+    <color name="TitleText">@android:color/system_accent1_10</color>
+    <color name="NotTitledText">@android:color/system_accent1_100</color>
+    <color name="NotTitledTextLite">@android:color/system_accent1_50</color>
+    <color name="CheckboxBackgroundColor">@android:color/system_accent1_300</color>
+    <color name="CheckboxColor">@android:color/system_accent2_50</color>
 </resources>

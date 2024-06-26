@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#A82A2A"
+    android:background="#051218"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alatsi"
         android:text="Journal"
-        android:textColor="#FFD7D7"
+        android:textColor="@color/loginTextColor"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@+id/LoginID"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,10 @@
         android:id="@+id/LoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
         android:text="Логин"
-        android:textColor="@color/white"
+        android:textColor="@color/loginTextColor"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/LoginID"
         app:layout_constraintStart_toStartOf="@+id/LoginID" />
 
@@ -51,9 +53,11 @@
         android:id="@+id/PasswordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="16dp"
         android:text="Пароль"
-        android:textColor="@color/white"
+        android:textColor="@color/loginTextColor"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/LoginID"
         app:layout_constraintTop_toBottomOf="@+id/LoginID" />
 
@@ -71,28 +75,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PasswordText" />
 
-    <ImageView
+    <Button
         android:id="@+id/ButtonLogin"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/loginbutton"
+        android:text="Войти"
+        android:textColor="@color/loginbuttontext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordID"
-        app:srcCompat="@drawable/loginbuttonstyle" />
+        app:layout_constraintTop_toBottomOf="@+id/PasswordID" />
 
-    <TextView
-        android:id="@+id/ButtonLoginText"
+    <CheckBox
+        android:id="@+id/RememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alatsi"
-        android:text="Войти"
-        android:textColor="@color/loginbuttontext"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="186dp"
-        tools:layout_editor_absoluteY="694dp" />
+        android:layout_marginLeft="-4dp"
+        android:button="@drawable/checkbox_selector"
+        android:buttonTintMode="multiply"
+        android:text="Не запоминать пароль"
+        app:layout_constraintStart_toStartOf="@+id/PasswordID"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordID" />
 
     <TextView
         android:id="@+id/ErrorText"
@@ -108,7 +112,7 @@
         android:id="@+id/EnterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,ButtonLogin,ButtonLoginText,GitButton"
+        app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,GitButton,ButtonLogin,RememberMe"
         tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
@@ -146,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FullNameText"
-            android:textColor="@android:color/white"
+            android:textColor="@color/NotTitledTextLite"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -229,6 +233,7 @@
                         android:paddingBottom="6dp"
                         android:text="Статистика месяца"
                         android:textColor="#FFFFFF"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -305,6 +310,7 @@
                         android:layout_height="wrap_content"
                         android:text="Статистика домашних заданий"
                         android:textColor="#FFFFFF"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -474,6 +480,7 @@
                         android:id="@+id/SctionDescription3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="16sp"
                         android:text="Лидеры потока и группы"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
@@ -529,7 +536,7 @@
                     android:layout_margin="4dp"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/section_border"
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:paddingBottom="24dp">
 
                     <androidx.constraintlayout.widget.Group
@@ -629,7 +636,7 @@
             android:id="@+id/BlackoutEffect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#9E353535"
+            android:background="#8B000000"
             android:onClick="CloseStudentImage" />
 
         <ImageView
