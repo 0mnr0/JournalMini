@@ -8,11 +8,21 @@
     <color name="light_blue_900">#FF01579B</color>
     <color name="MiniSectionColor">#555555</color>
     <color name="GlobalSectionColor">#444444</color>
-    <color name="loginbutton">#179900</color>
+    <color name="loginbutton">#387E54</color>
     <color name="loginbuttontext">#FFF</color>
-    <color name="constraintBgColor">#031201</color>
+    <color name="constraintBgColor">#01120C</color>
     <color name="loginTextColor">#FFF</color>
     <color name="TitleText">#FFF</color>
     <color name="NotTitledText">#DEDEDE</color>
     <color name="NotTitledTextLite">#EBEBEB</color>
+    <color name="CheckboxBackgroundColor">#3C3C3C</color>
+    <color name="CheckboxColor">#36E67B</color>
+    <color name="SnackbarBackground">#2E5D3A</color>
+    <color name="SnackbarForeground">#E3FFDD</color>
+    <color name="ActiveButtonBackground">#84D08E</color>
+    <color name="ActiveButtonForeground">#21543C</color>
+    <color name="PassiveButtonBackground">#21543C</color>
+    <color name="PassiveButtonForeground">#6CED7D</color>
+    <color name="MonetViewBackground">#173729</color>
+    <color name="CookedHWColors">#C5CECA</color>
 </resources>

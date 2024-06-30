@@ -125,7 +125,6 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
                 inputStream.close();
 
                 if (caching){
-                    Log.d("SaveTheCache:", url);
                     saveString(context, url, responseCode+"|"+response+"|"+url);
                     saveInt(context, url, CurrentTime);
                 }
@@ -136,7 +135,7 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return "-123"+"|Error|null";
+            return "-123|Error|null";
         }
     }
 

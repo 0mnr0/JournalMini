@@ -94,27 +94,10 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                 Toast.LENGTH_LONG).show();
     }
 
-    public void updateMonetColors(){
-        TextView MadedPercents = findViewById(R.id.MadedPercents);
-        MadedPercents.setTextColor(GetMonetLite());
-        TextView CurrentDayInSchedule = findViewById(R.id.SheduleDayDisplaying);
-        CurrentDayInSchedule.setTextColor(GetMonetLite());
-        Button PreviousDayShedule = findViewById(R.id.PreviousDayShedule);
-        PreviousDayShedule.setBackgroundColor(GetMonetViewBackground());
-        PreviousDayShedule.setTextColor(GetMonetLite());
 
-        Button NextDaySchedule = findViewById(R.id.NextDayShedule);
-        NextDaySchedule.setBackgroundColor(GetMonetViewBackground());
-        NextDaySchedule.setTextColor(GetMonetLite());
-    }
 
     public int GetMonetText(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            return getResources().getColor(android.R.color.system_accent1_600);
-        } else {
-            return Color.parseColor("#ffffff");
-        }
-
+        return getResources().getColor(R.color.PassiveButtonBackground);
     }
 
     public int GetMonetLite(){
@@ -553,9 +536,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             return insets;
         });
 
-
-        updateMonetColors();
-
         LeadRecyclerView = findViewById(R.id.LeaderRecycleView);
         LeadRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -606,7 +586,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
     private void AccEnterInit() {
         ProgressBar LoginBar = findViewById(R.id.progressBar);
-        LoginBar.setIndeterminateTintList(ColorStateList.valueOf(GetMonetLite()));
         LoginBar.setVisibility(View.VISIBLE);
         PasswordID.setEnabled(false);
         LoginID.setEnabled(false);

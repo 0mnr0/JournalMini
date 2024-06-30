@@ -95,6 +95,7 @@
         android:button="@drawable/checkbox_selector"
         android:buttonTintMode="multiply"
         android:text="Не запоминать пароль"
+        android:textColor="@color/NotTitledText"
         app:layout_constraintStart_toStartOf="@+id/PasswordID"
         app:layout_constraintTop_toBottomOf="@+id/PasswordID" />
 
@@ -129,9 +130,10 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:indeterminateBehavior="repeat"
         android:indeterminateDuration="350"
         android:indeterminateOnly="true"
-        android:indeterminateTint="#FF0000"
+        android:indeterminateTint="@color/ActiveButtonBackground"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -247,6 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Средний балл"
+                        android:textColor="@color/ActiveButtonBackground"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SectionDescription1" />
 
@@ -294,6 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Посещаемость"
+                        android:textColor="@color/ActiveButtonBackground"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/AvgProcessDecription" />
@@ -463,6 +467,7 @@
                             android:id="@+id/MadedPercents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/CookedHWColors"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/hw_progress"
@@ -487,6 +492,7 @@
                         android:autoSizeMaxTextSize="16sp"
                         android:text="Лидеры потока и группы"
                         android:textColor="#FFFFFF"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -505,8 +511,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
+                        android:backgroundTint="@color/ActiveButtonBackground"
                         android:onClick="OpenLeaderGroup"
                         android:text="Лидеры группы"
+                        android:textColor="@color/ActiveButtonForeground"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SctionDescription3" />
@@ -516,8 +524,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
+                        android:backgroundTint="@color/PassiveButtonBackground"
                         android:onClick="OpenLeaderStream"
                         android:text="Лидеры потока"
+                        android:textColor="@color/PassiveButtonForeground"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline3"
                         app:layout_constraintTop_toBottomOf="@+id/SctionDescription3" />
@@ -542,6 +552,18 @@
                     android:background="@drawable/section_border"
                     android:padding="8dp">
 
+                    <TextView
+                        android:id="@+id/SectionDescription4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="16sp"
+                        android:text="Распиание и экзамены"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/ScheduleDaySelection"
                         android:layout_width="wrap_content"
@@ -552,20 +574,22 @@
                         android:id="@+id/SheduleAndExams"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/ActiveButtonBackground"
                         android:onClick="ShowExams"
                         android:text="Показать экзамены"
+                        android:textColor="@color/ActiveButtonForeground"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/SectionDescription4" />
 
                     <Button
                         android:id="@+id/PreviousDayShedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#373737"
+                        android:backgroundTint="@color/PassiveButtonBackground"
                         android:onClick="ShowSheduleMinus"
                         android:text="-1 День"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/PassiveButtonForeground"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
                         tools:ignore="HardcodedText" />
@@ -575,6 +599,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CurrentDate"
+                        android:textColor="@color/PassiveButtonForeground"
                         app:layout_constraintBottom_toBottomOf="@+id/PreviousDayShedule"
                         app:layout_constraintEnd_toStartOf="@+id/NextDayShedule"
                         app:layout_constraintStart_toEndOf="@+id/PreviousDayShedule"
@@ -584,10 +609,10 @@
                         android:id="@+id/NextDayShedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#373737"
+                        android:backgroundTint="@color/PassiveButtonBackground"
                         android:onClick="ShowShedulePlus"
                         android:text="+1 День"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/PassiveButtonForeground"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/SheduleAndExams"
                         tools:ignore="HardcodedText" />
