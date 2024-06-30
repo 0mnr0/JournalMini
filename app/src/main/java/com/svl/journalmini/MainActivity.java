@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -27,7 +28,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
-import androidx.core.graphics.ColorUtils;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,7 +36,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
@@ -44,20 +43,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
-import com.onurkagan.ksnack_lib.Animations.Fade;
 import com.onurkagan.ksnack_lib.Animations.Slide;
 import com.onurkagan.ksnack_lib.KSnack.KSnack;
-import com.onurkagan.ksnack_lib.KSnack.KSnackBarEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -102,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
     public void updateMonetColors(){
-        Button SheduleAndExams = findViewById(R.id.SheduleAndExams);
-        SheduleAndExams.setBackgroundColor(GetMonetViewBackground());
-        SheduleAndExams.setTextColor(GetMonetLite());
         TextView MadedPercents = findViewById(R.id.MadedPercents);
         MadedPercents.setTextColor(GetMonetLite());
         TextView CurrentDayInSchedule = findViewById(R.id.SheduleDayDisplaying);
@@ -118,10 +108,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         NextDaySchedule.setTextColor(GetMonetLite());
     }
 
-    public int ColorUtils(int Color1, int Color2){
-        return (ColorUtils.blendARGB(Color1, Color2, 0.5F));
-    }
-
     public int GetMonetText(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return getResources().getColor(android.R.color.system_accent1_600);
@@ -132,13 +118,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
     public int GetMonetLite(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            return getResources().getColor(android.R.color.system_accent1_100);
-        } else {
-            return Color.parseColor("#555555");
-        }
-
+        return getResources().getColor(R.color.ActiveButtonBackground);
     }
+
     public int GetMonetBackground(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return getResources().getColor(android.R.color.system_accent1_300);
@@ -147,22 +129,11 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         }
 
     }
-    public int GetMonetForeground(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            return getResources().getColor(android.R.color.system_accent1_900);
-        } else {
-            return Color.parseColor("#555555");
-        }
 
-    }
     public int GetMonetViewBackground(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            return getResources().getColor(android.R.color.system_accent1_700);
-        } else {
-            return Color.parseColor("#101010");
-        }
-
+        return getResources().getColor(R.color.MonetViewBackground);
     }
+
     public void ClearEnters(){
         PasswordID.setText("");
         LoginID.setText("");
@@ -293,7 +264,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
     public void ProcessMainPageAvgScore(int AverageScore){
+        float FloatingAverageScore = (float) AverageScore;
         RoundedProgressBar AverageBar = findViewById(R.id.RoundedAveragreProgreess);
+        Log.d("AvgScore", "Input: "+AverageScore+", Prog:"+(FloatingAverageScore/12*100));
         AverageBar.setProgressPercentage(((double) AverageScore /12)*100, true);
         TextView AverageText = findViewById(R.id.AvgMarkDecription);
         AverageText.setText("Средний балл: "+AverageScore+"/12");
@@ -511,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/count/homework", "GET", new JSONObject(), Access_Token, false);
-        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token, false);
+        getData("https://msapi.top-academy.ru/api/v2/dashboard/progress/leader-group", "GET", new JSONObject(), Access_Token, true);
 
 
         if (!TimerLaunched) {
@@ -535,7 +508,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
     public void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
-        SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted, UseCache);
+        SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted, UseCache, this);
         sendDataTask.execute();
     }
 
@@ -564,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         EdgeToEdge.enable(this);
         Trace AppInitStart = FirebasePerformance.getInstance().newTrace("AppInit");
         AppInitStart.start();
+
 
 
 

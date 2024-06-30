@@ -1,7 +1,10 @@
 package com.svl.journalmini;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -23,22 +26,59 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
     private final JSONObject data;
     private final OnTaskCompleted listener;
     private final String access_Token;
-    private boolean onlyGet;
+    boolean onlyGet;
     private boolean caching;
+    private Context context;
 
-    public SendDataTask(String url, String FETCH_TYPE, JSONObject data, String access_Token, OnTaskCompleted listener, boolean UseCache) {
+
+
+    public SendDataTask(String url, String FETCH_TYPE, JSONObject data, String access_Token, OnTaskCompleted listener, boolean UseCache, Context context) {
         this.url = url;//URL To Fetch
         this.data = data;// JSON Data include if it not empty
         this.FetchType = FETCH_TYPE;// POST or Get
         this.listener = listener;//Just for another activity
         this.access_Token = access_Token;//Access token that i have
         this.caching = UseCache;
+        this.context = context;
     }
+
+    public static void saveString(Context context, String Key, String value) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CachedValues", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Key, value);
+        editor.apply();
+    }
+    public static String getString(Context context, String Key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CachedValues", Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Key, null);
+    }
+
+    public static void saveInt(Context context, String Key, Long value) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CachedValuesTimings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(Key, value);
+        editor.apply();
+    }
+    public static Long getInt(Context context, String Key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CachedValuesTimings", Context.MODE_PRIVATE);
+        return sharedPreferences.getLong(Key, -1);
+    }
+
 
     @Override
     protected String doInBackground(Void... voids) {
+        if (context == null) {caching = false; }
         try {
             onlyGet = FetchType.equals("GET");
+            Long CurrentTime = System.currentTimeMillis() / 60000;
+
+            if (caching) {
+                Long cacheTime = getInt(context, url);
+                if (CurrentTime - cacheTime < 10){
+                    Object returnedResult = getString(context, url);
+                    if (returnedResult!= null) {return getString(context, url);}
+                }
+            }
 
             URL urlObject = new URL(url);
             HttpURLConnection urlConnection = (HttpURLConnection) urlObject.openConnection();
@@ -83,6 +123,13 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
                 }
                 bufferedReader.close();
                 inputStream.close();
+
+                if (caching){
+                    Log.d("SaveTheCache:", url);
+                    saveString(context, url, responseCode+"|"+response+"|"+url);
+                    saveInt(context, url, CurrentTime);
+                }
+
                 return responseCode+"|"+response+"|"+url;
             } else {
                 return responseCode+"|Error|"+url;

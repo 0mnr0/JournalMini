@@ -97,7 +97,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
 
     public static void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
-        SendDataTask sendData = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, NewAppWidget::onTaskCompleted, UseCache);
+        SendDataTask sendData = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, NewAppWidget::onTaskCompleted, UseCache, null);
         sendData.execute();
     }
 
