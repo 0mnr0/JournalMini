@@ -69,7 +69,7 @@
         android:layout_marginRight="24dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:inputType="text|textVisiblePassword|textAutoComplete|textAutoCorrect|textEnableTextConversionSuggestions"
+        android:inputType="text|textPassword|textAutoComplete"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,13 +91,23 @@
         android:id="@+id/RememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-4dp"
         android:button="@drawable/checkbox_selector"
         android:buttonTintMode="multiply"
         android:text="Не запоминать пароль"
         android:textColor="@color/NotTitledText"
         app:layout_constraintStart_toStartOf="@+id/PasswordID"
         app:layout_constraintTop_toBottomOf="@+id/PasswordID" />
+
+    <ImageView
+        android:id="@+id/passwordEye"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:onClick="PVisibilityToggle"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/PasswordID"
+        app:layout_constraintEnd_toEndOf="@+id/PasswordID"
+        app:layout_constraintTop_toTopOf="@+id/PasswordID"
+        app:srcCompat="@drawable/iseepassword" />
 
     <TextView
         android:id="@+id/ErrorText"
@@ -114,8 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,GitButton,ButtonLogin,RememberMe"
-        tools:ignore="NotSibling"
-        tools:visibility="gone" />
+        tools:ignore="NotSibling" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
@@ -123,7 +132,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"

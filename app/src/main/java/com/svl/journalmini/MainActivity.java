@@ -6,15 +6,15 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     private StudentAdapter Studapter;
     private List<Student> studentList;
     boolean CanLogin = true;
+    boolean VisiblePassword = false;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases/tag/Public"));
@@ -180,6 +181,23 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             adapter.notifyDataSetChanged();
         }
         LoadingBar(false);
+    }
+
+    public void PVisibilityToggle(View view) {
+        VisiblePassword = !VisiblePassword;
+        ImageView eyeImg = findViewById(R.id.passwordEye);
+        EditText passwordField = findViewById(R.id.PasswordID);
+        if (!VisiblePassword) {
+            eyeImg.setImageDrawable(getResources().getDrawable(R.drawable.iseepassword));
+            eyeImg.setPadding(10,10,10,10);
+            passwordField.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            passwordField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        } else {
+            eyeImg.setImageDrawable(getResources().getDrawable(R.drawable.idontseethepassword));
+            eyeImg.setPadding(20,20,20,20);
+            passwordField.setInputType(InputType.TYPE_CLASS_TEXT);
+            passwordField.setTransformationMethod(null);
+        }
     }
 
     public void LoadingBar(boolean visible){
