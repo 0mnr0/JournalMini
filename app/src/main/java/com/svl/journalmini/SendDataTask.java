@@ -74,7 +74,7 @@ public class SendDataTask extends AsyncTask<Void, Void, String> {
 
             if (caching) {
                 Long cacheTime = getInt(context, url);
-                if (CurrentTime - cacheTime < 10){
+                if (CurrentTime - cacheTime < 30){
                     Object returnedResult = getString(context, url);
                     if (returnedResult!= null) {return getString(context, url);}
                 }
