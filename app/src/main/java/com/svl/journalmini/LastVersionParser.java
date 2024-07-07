@@ -33,6 +33,7 @@ public class LastVersionParser {
                 try {
                     URL url = new URL(urlString);
                     urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setUseCaches(false);
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();
 

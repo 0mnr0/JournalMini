@@ -733,6 +733,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
             String version = pInfo.versionName;
             text = text.replace("\n","");
+            Log.d("ReleaseCheck", text+","+version+":"+text.equals(version));
             if (!text.equals(version)){
                 KSnack kSnack = new KSnack(MainActivity.this);
                 kSnack.setAction("Сюда", v -> {OpenRepository(null); kSnack.dismiss();})
