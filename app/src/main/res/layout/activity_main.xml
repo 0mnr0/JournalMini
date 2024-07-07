@@ -124,7 +124,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="JournalPreview,LoginText,LoginID,PasswordText,PasswordID,GitButton,ButtonLogin,RememberMe"
-        tools:ignore="NotSibling" />
+        tools:ignore="NotSibling"
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/InAccountGroup"
@@ -132,7 +133,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="AccountBlock,MainPageLaypout"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -151,7 +152,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/AccountBlock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/acc_info_background"
+        android:padding="4dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,26 +167,34 @@
             android:id="@+id/FullNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="FullNameText"
             android:textColor="@color/NotTitledTextLite"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/AccPhoto"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/GroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
             android:text="GroupName"
-            android:textColor="#D1D1D1"
+            android:textColor="#E7E7E7"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/AccPhoto"
             app:layout_constraintTop_toBottomOf="@+id/FullNameText" />
 
         <ImageView
             android:id="@+id/AccPhoto"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="1dp"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -190,22 +202,14 @@
             android:id="@+id/Logout"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
             android:onClick="AccountExit"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/divider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/exit_logo" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="1dp"
-            android:background="@color/GlobalSectionColor"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AccPhoto" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/exit_logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -214,6 +218,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:animateLayoutChanges="true"
+
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/SheduleSection"
         app:layout_constraintStart_toStartOf="parent"
