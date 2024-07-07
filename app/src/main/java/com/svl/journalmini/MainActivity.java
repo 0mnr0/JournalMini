@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     boolean VisiblePassword = false;
 
     public void OpenRepository(View view){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases/tag/Public"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
         startActivity(browserIntent);
     }
 
