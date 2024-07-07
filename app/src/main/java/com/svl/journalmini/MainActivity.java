@@ -481,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         ErrorText.setText("");
 
         CheckAppUpdates();
-        getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token, true);
+        getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/count/homework", "GET", new JSONObject(), Access_Token, false);
