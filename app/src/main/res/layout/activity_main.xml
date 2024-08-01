@@ -200,16 +200,16 @@
 
         <ImageButton
             android:id="@+id/Logout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="3dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
-            android:onClick="AccountExit"
+            android:onClick="ShowProfilePopup"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/exit_logo" />
+            app:srcCompat="@drawable/menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

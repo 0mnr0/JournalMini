@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="69dp" android:viewportHeight="691" android:viewportWidth="690" android:width="68.90015dp">
+      
+    <group>
+            
+        <clip-path android:pathData="M0,0h690v691h-690z"/>
+            
+        <path android:fillColor="@color/ActiveButtonBackground" android:fillType="evenOdd" android:pathData="M0,345.5C0,154.69 154.46,0 345,0 535.54,0 690,154.69 690,345.5 690,536.31 535.54,691 345,691 154.46,691 0,536.31 0,345.5Z"/>
+            
+        <path android:fillColor="@color/ActiveButtonForeground" android:fillType="evenOdd" android:pathData="M76,229C76,210.77 90.77,196 109,196L585,196C603.23,196 618,210.77 618,229L618,229C618,247.23 603.23,262 585,262L109,262C90.77,262 76,247.23 76,229Z"/>
+            
+        <path android:fillColor="@color/ActiveButtonForeground" android:fillType="evenOdd" android:pathData="M76,356.5C76,338.55 90.55,324 108.5,324L585.5,324C603.45,324 618,338.55 618,356.5L618,356.5C618,374.45 603.45,389 585.5,389L108.5,389C90.55,389 76,374.45 76,356.5Z"/>
+            
+        <path android:fillColor="@color/ActiveButtonForeground" android:fillType="evenOdd" android:pathData="M76,474.5C76,456.55 90.55,442 108.5,442L585.5,442C603.45,442 618,456.55 618,474.5L618,474.5C618,492.45 603.45,507 585.5,507L108.5,507C90.55,507 76,492.45 76,474.5Z"/>
+          
+    </group>
+    
+</vector>

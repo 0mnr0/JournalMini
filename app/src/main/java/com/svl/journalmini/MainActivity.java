@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     boolean VisiblePassword = false;
     JSONObject userDataToAuth = null;
     String UIServerAuth = "null";
+    private ProfilePopup profilePopup;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -539,7 +540,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         OpenLeaderStream.setTextColor(GetMonetLite());
         OpenLeaderStream.setBackgroundColor(GetMonetText());
     }
-
+    public void ShowProfilePopup(View view) {
+        profilePopup.showPopup();
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -548,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         EdgeToEdge.enable(this);
         Trace AppInitStart = FirebasePerformance.getInstance().newTrace("AppInit");
         AppInitStart.start();
-
+        profilePopup = new ProfilePopup(this);
 
 
 
@@ -606,6 +609,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
 
         AppInitStart.stop();
+
     }
 
 
