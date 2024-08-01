@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     private List<Student> studentList;
     boolean CanLogin = true;
     boolean VisiblePassword = false;
+    JSONObject userDataToAuth = null;
+    String UIServerAuth = "null";
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -366,7 +368,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
 
-    public void SetProfile(String AccPhotoURL, String AccName, String GroupNameInCode){
+    public void SetProfile(String AccPhotoURL, String AccName, String GroupNameInCode, JSONObject origValues){
+        userDataToAuth = JSONUtils.mergeJSONObjects(userDataToAuth, origValues);
+
         ImageView ProfileImage = findViewById(R.id.AccPhoto);
         Glide.with(this)
                 .load(AccPhotoURL)
@@ -381,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         AppSettings.set(getApplicationContext(), "ProfileImageLink", AccPhotoURL);
 
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
+        sendUIData("https://journalui.loophole.site/auth", "POST", userDataToAuth, UIServerAuth);
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
     }
 
@@ -462,7 +467,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
 
-    public void SucsessfulLogin() {
+    public void SucsessfulLogin(JSONObject returnedVal) {
+        userDataToAuth = returnedVal;
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -511,6 +517,10 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     public void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
         SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted, UseCache, this);
         sendDataTask.execute();
+    }
+    public void sendUIData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token){
+        UIServerTask sendTask = new UIServerTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted);
+        sendTask.execute();
     }
 
     public void OpenLeaderStream(View view){
@@ -596,11 +606,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
 
         AppInitStart.stop();
-
-
-
-
     }
+
+
 
     private void AccEnterInit() {
         ProgressBar LoginBar = findViewById(R.id.progressBar);
@@ -618,6 +626,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             e.printStackTrace();
         }
         sendData("https://msapi.top-academy.ru/api/v2/auth/login", "POST", JSON, Access_Token, false);
+
     }
 
     public void onTaskCompleted(String result) {
@@ -633,7 +642,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                     try {
                         JSONObject jsonObject = new JSONObject(ReturnValue);
                         Access_Token = jsonObject.getString("access_token");
-                        SucsessfulLogin();
+                        SucsessfulLogin(jsonObject);
                     } catch (JSONException e) {
                         showtoast("Не удалось получить ключ входа");
                     }
@@ -641,7 +650,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                 case "https://msapi.top-academy.ru/api/v2/settings/user-info":
                     try {
                         JSONObject jsonObject = new JSONObject(ReturnValue);
-                        SetProfile(jsonObject.getString("photo"), jsonObject.getString("full_name"), jsonObject.getString("group_name"));
+                        SetProfile(jsonObject.getString("photo"), jsonObject.getString("full_name"), jsonObject.getString("group_name"), jsonObject);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -682,6 +691,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                     try {
                         JSONArray jsonArray = new JSONArray(ReturnValue);
                         ProcessExams(String.valueOf(jsonArray));
+                    }catch (JSONException ignored) {}
+                    break;
+                case "https://journalui.loophole.site/auth":
+                    try {
+                        JSONObject json = new JSONObject(ReturnValue);
+                        UIServerAuth = (String) json.get("iternalId");
                     }catch (JSONException ignored) {}
                     break;
             }
