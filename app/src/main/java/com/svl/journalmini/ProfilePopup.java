@@ -1,9 +1,7 @@
 package com.svl.journalmini;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +10,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 public class ProfilePopup {
 
-    private final Context context;
+    private Context context;
     private PopupWindow popupWindow;
+
 
     public ProfilePopup(Context context) {
         this.context = context;
@@ -42,7 +39,8 @@ public class ProfilePopup {
         View bgTouch = popupView.findViewById(R.id.BackgroundTouch);
         bgTouch.setOnClickListener(v -> closePopup() );
         Button lockProfileButton = popupView.findViewById(R.id.ExitButton);
-        lockProfileButton.setOnClickListener(v -> closePopup() );
+        MainActivity mainActivity = (MainActivity) context;
+        lockProfileButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
         popupWindow.setFocusable(true);
         popupWindow.setClippingEnabled(false);
         popupWindow.setOutsideTouchable(false);
