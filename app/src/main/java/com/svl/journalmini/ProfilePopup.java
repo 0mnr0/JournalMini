@@ -46,6 +46,7 @@ public class ProfilePopup {
 
         assert popupView != null;
         Button lockProfileButton = popupView.findViewById(R.id.ExitButton);
+        Button closePoupButton = popupView.findViewById(R.id.closeBtn);
         mainActivity = (MainActivity) context;
         lockProfileButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
 
@@ -56,6 +57,7 @@ public class ProfilePopup {
         popupWindow.setOutsideTouchable(false);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupView.setOnTouchListener((v, event) -> true);
+        closePoupButton.setOnClickListener(v -> mainActivity.CloseProfilePopup(null));
 
 
         popupWindow.setOnDismissListener(() -> {
