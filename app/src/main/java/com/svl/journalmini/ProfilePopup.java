@@ -53,19 +53,13 @@ public class ProfilePopup {
 
         popupWindow.setFocusable(true);
         popupWindow.setClippingEnabled(false);
-        popupWindow.setOutsideTouchable(true);
+        popupWindow.setOutsideTouchable(false);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popupView.setOnTouchListener((v, event) -> true);
 
-        popupWindow.setTouchInterceptor((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN)
-            {
-                mainActivity.tintEffect(false);
-                closePopup();
-                return true;
-            }
-
-            return false;
+        popupWindow.setOnDismissListener(() -> {
+            mainActivity.CloseProfilePopup(null);
         });
 
         popupView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
