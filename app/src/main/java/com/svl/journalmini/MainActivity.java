@@ -49,6 +49,7 @@ import com.onurkagan.ksnack_lib.KSnack.KSnack;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -541,7 +542,22 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         OpenLeaderStream.setBackgroundColor(GetMonetText());
     }
     public void ShowProfilePopup(View view) {
+        tintEffect(true);
         profilePopup.showPopup();
+    }
+
+    public void CloseProfilePopup(View view){
+        profilePopup.closePopup();
+        tintEffect(false);
+    }
+
+    public void tintEffect(Boolean show){
+        TextView tint = findViewById(R.id.tintEffect);
+        if (show) {
+            tint.setVisibility(View.VISIBLE);
+        } else {
+            tint.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("MissingInflatedId")

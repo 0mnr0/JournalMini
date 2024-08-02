@@ -1,8 +1,12 @@
 package com.svl.journalmini;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -14,6 +18,8 @@ public class ProfilePopup {
 
     private Context context;
     private PopupWindow popupWindow;
+    private View popupView;
+    private MainActivity mainActivity;
 
 
     public ProfilePopup(Context context) {
@@ -21,12 +27,15 @@ public class ProfilePopup {
         initPopup();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initPopup() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.profile_view, null);
+        popupView = inflater.inflate(R.layout.profile_view, null);
         popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+
         popupWindow.getContentView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
@@ -36,25 +45,39 @@ public class ProfilePopup {
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         assert popupView != null;
-        View bgTouch = popupView.findViewById(R.id.BackgroundTouch);
-        bgTouch.setOnClickListener(v -> closePopup() );
         Button lockProfileButton = popupView.findViewById(R.id.ExitButton);
-        MainActivity mainActivity = (MainActivity) context;
+        mainActivity = (MainActivity) context;
         lockProfileButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
+
+
+
         popupWindow.setFocusable(true);
         popupWindow.setClippingEnabled(false);
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        popupWindow.setTouchInterceptor((v, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN)
+            {
+                mainActivity.tintEffect(false);
+                closePopup();
+                return true;
+            }
+
+            return false;
+        });
 
         popupView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
     }
 
     public void showPopup() {
         View rootView = ((ViewGroup) ((MainActivity) context).findViewById(android.R.id.content)).getChildAt(0);
-        popupWindow.showAtLocation(rootView, android.view.Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
     }
 
     public void closePopup() {

@@ -9,6 +9,7 @@
     android:background="#051218"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/JournalPreview"
         android:layout_width="wrap_content"
@@ -706,5 +707,14 @@
         app:layout_constraintBottom_toTopOf="@+id/ErrorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/github" />
+
+    <TextView
+        android:id="@+id/tintEffect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/PopupBackgroundTint"
+        android:onClick="CloseProfilePopup"
+        android:text=""
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

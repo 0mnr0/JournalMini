@@ -25,4 +25,5 @@
     <color name="PassiveButtonForeground">#6CED7D</color>
     <color name="MonetViewBackground">#173729</color>
     <color name="CookedHWColors">#C5CECA</color>
+    <color name="PopupBackgroundTint">#70000000</color>
 </resources>

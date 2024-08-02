@@ -50,10 +50,10 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation(platform(libs.firebase.bom))
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation libs.firebase.analytics
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
     implementation 'com.github.MackHartley:RoundedProgressBar:3.0.0'
     implementation 'com.github.onurkagan:KSnack:1.1.2'
-    implementation "com.google.firebase:firebase-core:21.1.1"
+    implementation libs.firebase.core
 
 }
