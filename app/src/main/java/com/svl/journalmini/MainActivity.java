@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     JSONObject userDataToAuth = null;
     String UIServerAuth = "null";
     private ProfilePopup profilePopup;
+    boolean updateWasShowed = false;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -488,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         InAccountGroup.setVisibility(View.VISIBLE);
         ErrorText.setText("");
 
-        CheckAppUpdates();
+        if (!updateWasShowed){ CheckAppUpdates(); }
         getData("https://msapi.top-academy.ru/api/v2/settings/user-info", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/average-progress", "GET", new JSONObject(), Access_Token, false);
         getData("https://msapi.top-academy.ru/api/v2/dashboard/chart/attendance", "GET", new JSONObject(), Access_Token, false);
@@ -779,6 +780,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                         .setAnimation(Slide.Up.getAnimation(kSnack.getSnackView()), Slide.Down.getAnimation(kSnack.getSnackView()))
                         .setDuration(3000) // you can use for auto close.
                         .show();
+                updateWasShowed = true;
 
             }
         } catch (Exception ignored) {}
