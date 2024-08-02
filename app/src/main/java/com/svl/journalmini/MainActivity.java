@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         ImageView ProfileImage = findViewById(R.id.AccPhoto);
         Glide.with(this)
                 .load(AccPhotoURL)
-                .transform(new RoundedCorners(168))
+                .transform(new RoundedCorners(200000))
                 .into(ProfileImage);
         TextView AccFullName = findViewById(R.id.FullNameText);
         AccFullName.setText(AccName);
