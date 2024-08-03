@@ -542,9 +542,11 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         OpenLeaderStream.setTextColor(GetMonetLite());
         OpenLeaderStream.setBackgroundColor(GetMonetText());
     }
-    public void ShowProfilePopup(View view) {
+
+
+    public void ShowProfilePopup(View view) throws JSONException {
         tintEffect(true);
-        profilePopup.showPopup();
+        profilePopup.showPopup(userDataToAuth);
     }
 
     public void CloseProfilePopup(View view){
@@ -568,8 +570,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         EdgeToEdge.enable(this);
         Trace AppInitStart = FirebasePerformance.getInstance().newTrace("AppInit");
         AppInitStart.start();
-        profilePopup = new ProfilePopup(this);
-
+        try {
+            profilePopup = new ProfilePopup(this);
+        } catch (JSONException e) {
+            Log.e("ProfilePopupInit", String.valueOf(e));
+            showtoast("Ну удалось узнать данные из JSON в profilePopup");
+        }
 
 
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);

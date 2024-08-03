@@ -3,16 +3,19 @@ package com.svl.journalmini;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ProfilePopup {
 
@@ -22,15 +25,18 @@ public class ProfilePopup {
     private MainActivity mainActivity;
 
 
-    public ProfilePopup(Context context) {
+    public ProfilePopup(Context context) throws JSONException {
         this.context = context;
         initPopup();
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void initPopup() {
+    private void initPopup() throws JSONException {
+        mainActivity = (MainActivity) context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(R.layout.profile_view, null);
+
+
         popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -47,8 +53,8 @@ public class ProfilePopup {
         assert popupView != null;
         Button lockProfileButton = popupView.findViewById(R.id.ExitButton);
         Button closePoupButton = popupView.findViewById(R.id.closeBtn);
-        mainActivity = (MainActivity) context;
         lockProfileButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
+
 
 
 
@@ -71,8 +77,17 @@ public class ProfilePopup {
 
     }
 
-    public void showPopup() {
+    public void showPopup(JSONObject userDataToAuth) throws JSONException {
         View rootView = ((ViewGroup) ((MainActivity) context).findViewById(android.R.id.content)).getChildAt(0);
+
+
+        Log.wtf("userInfo val:", String.valueOf(userDataToAuth));
+        if (userDataToAuth != null) {
+            String UserName = userDataToAuth.getString("full_name");
+            TextView UserNameOnDisplay = popupView.findViewById(R.id.UserName);
+            UserNameOnDisplay.setText(UserName);
+        }
+
         popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
     }
 

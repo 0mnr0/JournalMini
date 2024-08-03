@@ -40,6 +40,12 @@
             android:textColor="#FFFFFF"
             app:cornerRadius="10dp" />
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/MonetViewBackground" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
