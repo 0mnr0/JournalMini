@@ -21,4 +21,5 @@
     <color name="MonetViewBackground">@android:color/system_accent1_700</color>
     <color name="CookedHWColors">@android:color/system_accent1_10</color>
     <color name="PopupBackgroundTint">#70000000</color>
+    <color name="MonetViewDarkBG">@android:color/system_accent1_800</color>
 </resources>

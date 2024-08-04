@@ -17,6 +17,7 @@
         android:background="@drawable/profile_layout"
         android:orientation="vertical"
         android:padding="10dp"
+        android:paddingTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -27,8 +28,40 @@
             android:layout_height="wrap_content"
             android:text="Имя профиля"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/lockState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bgtext_highlight_part2"
+                android:paddingRight="5dp"
+                android:text="PIN не активен"
+                android:textColor="#AFAFAF"
+                app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bgtext_highlight_part1"
+                android:maxWidth="30dp"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                android:tint="@color/ActiveButtonBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/lockState"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/key" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/LockProfile"

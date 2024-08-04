@@ -26,4 +26,5 @@
     <color name="MonetViewBackground">#173729</color>
     <color name="CookedHWColors">#C5CECA</color>
     <color name="PopupBackgroundTint">#70000000</color>
+    <color name="MonetViewDarkBG">#132E22</color>
 </resources>
