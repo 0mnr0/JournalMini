@@ -1,7 +1,5 @@
 package com.svl.journalmini;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import org.json.JSONObject;
@@ -56,7 +54,7 @@ public class UIServerTask extends AsyncTask<Void, Void, String> {
                     urlConnection.setRequestProperty("Accept", "application/json");
                 }
             }
-            urlConnection.setRequestProperty("Authorization", "Bearer "+access_Token);
+            urlConnection.setRequestProperty("Serveruniqid", access_Token);
 
 
 
