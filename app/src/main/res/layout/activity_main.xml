@@ -683,6 +683,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="24dp"
+            android:translationZ="10dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -715,6 +716,7 @@
         android:background="@color/PopupBackgroundTint"
         android:onClick="CloseProfilePopup"
         android:text=""
+        android:translationZ="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:visibility="visible" />
@@ -726,6 +728,7 @@
         android:layout_margin="20dp"
         android:background="@drawable/pin_bg"
         android:padding="14dp"
+        android:translationZ="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

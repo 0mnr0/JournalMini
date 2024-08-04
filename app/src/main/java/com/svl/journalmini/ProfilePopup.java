@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,6 +66,8 @@ public class ProfilePopup {
         LockProfileButton.setOnClickListener(v -> { ProfileLocker();});
         AccountExitButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
 
+        Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
+        EnterPinActionButton.setOnClickListener(v -> { closePopup(); mainActivity.ProfileLocker();});
 
 
 
@@ -87,11 +92,13 @@ public class ProfilePopup {
 
     public void showPopup(JSONObject userDataToAuth, JSONObject fullPopupInfo) throws JSONException {
         View rootView = ((ViewGroup) ((MainActivity) context).findViewById(android.R.id.content)).getChildAt(0);
-
-
-        Log.wtf("uui val:", String.valueOf(userDataToAuth));
         TextView UserNameOnDisplay = popupView.findViewById(R.id.UserName);
         TextView UserPinActive = popupView.findViewById(R.id.lockState);
+        ConstraintLayout ServerLockedByPin = popupView.findViewById(R.id.PinNotIserted);
+        Button LockProfileButton = popupView.findViewById(R.id.LockProfile);
+        Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
+
+
         String full_name_info = null;
         try{
             full_name_info = userDataToAuth.getString("full_name");
@@ -109,6 +116,15 @@ public class ProfilePopup {
             UserPinActive.setVisibility(View.VISIBLE);
             if (PinUse.equals("true")){
                 UserPinActive.setText("PIN Установлен");
+                if (!mainActivity.ProfilePINUnlocked) {
+                    ServerLockedByPin.setVisibility(View.VISIBLE);
+                    EnterPinActionButton.setVisibility(View.VISIBLE);
+                    LockProfileButton.setVisibility(View.GONE);
+                } else {
+                    ServerLockedByPin.setVisibility(View.GONE);
+                    EnterPinActionButton.setVisibility(View.GONE);
+                    LockProfileButton.setVisibility(View.VISIBLE);
+                }
             }
         }
 

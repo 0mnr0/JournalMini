@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     private ProfilePopup profilePopup;
     boolean updateWasShowed = false;
     private static String passphrase = "";
-    private boolean ProfilePINUnlocked = false;
+    public boolean ProfilePINUExisting = false;
+    public boolean ProfilePINUnlocked = false;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -209,6 +210,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             passwordField.setTransformationMethod(null);
         }
     }
+
+
+
 
     public void LoadingBar(boolean visible){
         ProgressBar LoginBar = findViewById(R.id.progressBar);
@@ -596,6 +600,10 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
     public void ProcessUIServer(JSONObject json) throws JSONException {
         UserInformation = new JSONObject();
+        Log.wtf("WTF_PinUse", String.valueOf(json.getBoolean("PINUse")));
+        if (json.getBoolean("PINUse") != false){
+            ProfilePINUExisting = true;
+        }
         UserInformation.put("usePin", json.get("PINUse"));
         passphrase = json.getString("passphrase");
         UIServerAuth = json.getString("iternalId");
