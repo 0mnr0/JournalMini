@@ -157,7 +157,7 @@
         android:layout_margin="4dp"
         android:background="@drawable/acc_info_background"
         android:padding="4dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

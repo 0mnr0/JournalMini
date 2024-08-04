@@ -77,15 +77,28 @@ public class ProfilePopup {
 
     }
 
-    public void showPopup(JSONObject userDataToAuth) throws JSONException {
+    public void showPopup(JSONObject userDataToAuth, JSONObject fullPopupInfo) throws JSONException {
         View rootView = ((ViewGroup) ((MainActivity) context).findViewById(android.R.id.content)).getChildAt(0);
 
 
-        Log.wtf("userInfo val:", String.valueOf(userDataToAuth));
-        if (userDataToAuth != null) {
+        Log.wtf("uui val:", String.valueOf(userDataToAuth));
+        TextView UserNameOnDisplay = popupView.findViewById(R.id.UserName);
+        TextView UserPinActive = popupView.findViewById(R.id.lockState);
+        if (userDataToAuth != null & userDataToAuth.get("full_name") != null) {
             String UserName = userDataToAuth.getString("full_name");
-            TextView UserNameOnDisplay = popupView.findViewById(R.id.UserName);
             UserNameOnDisplay.setText(UserName);
+        } else {
+            UserNameOnDisplay.setText("Секунду...");
+        }
+
+        UserPinActive.setVisibility(View.GONE);
+        if (fullPopupInfo != null){
+            Object PinUse = fullPopupInfo.getString("usePin");
+            UserPinActive.setVisibility(View.VISIBLE);
+            if (PinUse.equals("true") ){
+                mainActivity.showtoast("Yes, use");
+                UserPinActive.setText("PIN Установлен");
+            }
         }
 
         popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);

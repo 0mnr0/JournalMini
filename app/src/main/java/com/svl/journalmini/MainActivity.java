@@ -82,9 +82,11 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     boolean CanLogin = true;
     boolean VisiblePassword = false;
     JSONObject userDataToAuth = null;
+    JSONObject UserInformation = null;
     String UIServerAuth = "null";
     private ProfilePopup profilePopup;
     boolean updateWasShowed = false;
+    private static String passphrase = "";
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -543,10 +545,21 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         OpenLeaderStream.setBackgroundColor(GetMonetText());
     }
 
+    public void ProcessUIServer(JSONObject json) throws JSONException {
+        UserInformation = new JSONObject();
+        UserInformation.put("usePin", json.get("PINUse"));
+        passphrase = json.getString("passphrase");
+        UIServerAuth = json.getString("iternalId");
+    }
 
-    public void ShowProfilePopup(View view) throws JSONException {
+
+    public void ShowProfilePopup(View view) {
         tintEffect(true);
-        profilePopup.showPopup(userDataToAuth);
+        try {
+            profilePopup.showPopup(userDataToAuth, UserInformation);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void CloseProfilePopup(View view){
@@ -723,8 +736,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                 case "https://journalui.loophole.site/auth":
                     try {
                         JSONObject json = new JSONObject(ReturnValue);
-                        UIServerAuth = (String) json.get("iternalId");
-                    }catch (JSONException ignored) {}
+                        ProcessUIServer(json);
+                    }catch (JSONException e) {Log.e("Loophole Auth", String.valueOf(e));}
                     break;
             }
             if (UrlQuestion.contains("https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter")){
