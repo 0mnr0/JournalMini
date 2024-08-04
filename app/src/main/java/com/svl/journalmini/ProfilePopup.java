@@ -30,6 +30,11 @@ public class ProfilePopup {
         initPopup();
     }
 
+    public void ProfileLocker(){
+        closePopup();
+        mainActivity.ProfileLocker();
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void initPopup() throws JSONException {
         mainActivity = (MainActivity) context;
@@ -51,9 +56,12 @@ public class ProfilePopup {
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         assert popupView != null;
-        Button lockProfileButton = popupView.findViewById(R.id.ExitButton);
+        Button LockProfileButton = popupView.findViewById(R.id.LockProfile);
+        Button AccountExitButton = popupView.findViewById(R.id.ExitButton);
         Button closePoupButton = popupView.findViewById(R.id.closeBtn);
-        lockProfileButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
+
+        LockProfileButton.setOnClickListener(v -> { ProfileLocker();});
+        AccountExitButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
 
 
 
@@ -84,7 +92,11 @@ public class ProfilePopup {
         Log.wtf("uui val:", String.valueOf(userDataToAuth));
         TextView UserNameOnDisplay = popupView.findViewById(R.id.UserName);
         TextView UserPinActive = popupView.findViewById(R.id.lockState);
-        if (userDataToAuth != null & userDataToAuth.get("full_name") != null) {
+        String full_name_info = null;
+        try{
+            full_name_info = userDataToAuth.getString("full_name");
+        } catch (Exception ignored){}
+        if (userDataToAuth != null & full_name_info!=null) {
             String UserName = userDataToAuth.getString("full_name");
             UserNameOnDisplay.setText(UserName);
         } else {
@@ -95,8 +107,7 @@ public class ProfilePopup {
         if (fullPopupInfo != null){
             Object PinUse = fullPopupInfo.getString("usePin");
             UserPinActive.setVisibility(View.VISIBLE);
-            if (PinUse.equals("true") ){
-                mainActivity.showtoast("Yes, use");
+            if (PinUse.equals("true")){
                 UserPinActive.setText("PIN Установлен");
             }
         }

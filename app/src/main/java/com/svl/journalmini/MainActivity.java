@@ -3,6 +3,7 @@ package com.svl.journalmini;
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     private ProfilePopup profilePopup;
     boolean updateWasShowed = false;
     private static String passphrase = "";
+    private boolean ProfilePINUnlocked = false;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         LoadEnters();
         Group LoginGroup = findViewById(R.id.EnterGroup);
         LoginGroup.setVisibility(View.VISIBLE);
+        ProfilePINUnlocked = false;
     }
 
     public void CloseStudentImage(View view){
@@ -213,6 +216,52 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             LoginBar.setVisibility(View.VISIBLE);
         } else {
             LoginBar.setVisibility(View.GONE);
+        }
+    }
+
+    public void ProcessPinPassword(Boolean state){
+        ProgressBar progressBar = findViewById(R.id.PinCheckingStatus);
+        EditText txt = findViewById(R.id.PinInput);
+        Button launchCheck = findViewById(R.id.ContinueButton);
+        launchCheck.setEnabled(true);
+        progressBar.setVisibility(View.GONE);
+        ConstraintLayout ProfilePin = findViewById(R.id.EnterProfilePin);
+
+        txt.setText("");
+        if (state){
+            if (!ProfilePINUnlocked){
+                showtoast("PIN Верный. Доступ к серверу разрешён");
+            }
+            ProfilePin.setVisibility(View.GONE);
+            tintEffect(false);
+            ProfilePINUnlocked = true;
+        } else {
+            ProfilePin.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public void ContinuePINCheck(View view) throws JSONException {
+
+        ProgressBar progressBar = findViewById(R.id.PinCheckingStatus);
+        EditText txt = findViewById(R.id.PinInput);
+        Button launchCheck = findViewById(R.id.ContinueButton);
+        launchCheck.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
+        JSONObject FetchPinValue = new JSONObject();
+        FetchPinValue.put("isItCorrect", txt.getText());
+        FetchPinValue.put("passphrase", passphrase);
+        Log.w("SendingToPinCheck:", String.valueOf(FetchPinValue));
+        sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+    }
+
+    public void ProfileLocker(){
+        if (!ProfilePINUnlocked) {
+            tintEffect(true);
+            ConstraintLayout ProfilePin = findViewById(R.id.EnterProfilePin);
+            ProfilePin.setVisibility(View.VISIBLE);
+        } else {
+            ProcessPinPassword(true);
         }
     }
 
@@ -568,10 +617,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     }
 
     public void tintEffect(Boolean show){
+        ConstraintLayout ProfilePin = findViewById(R.id.EnterProfilePin);
         TextView tint = findViewById(R.id.tintEffect);
         if (show) {
             tint.setVisibility(View.VISIBLE);
         } else {
+            ProfilePin.setVisibility(View.GONE);
             tint.setVisibility(View.GONE);
         }
     }
@@ -739,6 +790,10 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                         ProcessUIServer(json);
                     }catch (JSONException e) {Log.e("Loophole Auth", String.valueOf(e));}
                     break;
+                case "https://journalui.loophole.site/isPinCorrect":
+                    ProcessPinPassword(true);
+                    break;
+
             }
             if (UrlQuestion.contains("https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter")){
                 ProcessShedule(ReturnValue);
@@ -756,6 +811,9 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             showtoast("Неверное имя пользователя или пароль");
         } else if (ReturnCode == -123) {
             showtoast("Не удалось запустить процедуру проверки");
+        } else if (ReturnCode == 418 && UrlQuestion.equals("https://journalui.loophole.site/isPinCorrect")) {
+            showtoast("Неверный PIN");
+            ProcessPinPassword(false);
         }
 
         if (ReturnCode == 422 || ReturnCode == -123 || ReturnCode == 405) {

@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class UIServerTask extends AsyncTask<Void, Void, String> {
@@ -49,12 +50,12 @@ public class UIServerTask extends AsyncTask<Void, Void, String> {
                 urlConnection.setDoInput(!data.toString().equals("{}"));
                 if (urlConnection.getDoInput()) {
                     urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                }
-                if (urlConnection.getDoInput()) {
                     urlConnection.setRequestProperty("Accept", "application/json");
                 }
             }
-            urlConnection.setRequestProperty("Serveruniqid", access_Token);
+            String encodedToken = URLEncoder.encode(access_Token, StandardCharsets.UTF_8.toString());
+            urlConnection.setRequestProperty("Serveruniqid", encodedToken);
+
 
 
 

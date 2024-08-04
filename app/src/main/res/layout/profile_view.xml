@@ -68,10 +68,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/ActiveButtonForeground"
-            android:padding="10dp"
+            android:padding="14dp"
             android:text="Включить блокировку входа"
             android:textColor="#FFFFFF"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="10dp"
+            app:icon="@drawable/lock"
+            app:iconGravity="textStart"
+            app:iconTint="@color/ActiveButtonBackground" />
 
         <View
             android:id="@+id/divider"
