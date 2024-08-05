@@ -122,7 +122,7 @@ public class ProfilePopup {
         }
 
         UserPinActive.setVisibility(View.GONE);
-        if (fullPopupInfo != null){
+        if (fullPopupInfo != null && !fullPopupInfo.equals("null")){
             Object PinUse = fullPopupInfo.getString("usePin");
             UserPinActive.setVisibility(View.VISIBLE);
             if (PinUse.equals("true")){
@@ -131,11 +131,15 @@ public class ProfilePopup {
                     ServerLockedByPin.setVisibility(View.GONE);
                     EnterPinActionButton.setVisibility(View.GONE);
                     LockProfileButton.setVisibility(View.VISIBLE);
-                    Log.d("fullPopupInfo.get('UserInformation')", (String) fullPopupInfo.get("phoneLock"));
-                    if (fullPopupInfo.getBoolean("phoneLock")){
+                    Log.d("fullPopupInfo.get('UserInformation')", fullPopupInfo.getString("phoneLock"));
+                    if (fullPopupInfo.get("phoneLock").equals("true")){
                         LockProfileButton.setText("Снять блокировку профиля");
                     } else {
-                        LockProfileButton.setText("Включить блокировку профиля");
+                        if (fullPopupInfo.get("phoneLock").equals("null")){
+                            LockProfileButton.setVisibility(View.GONE);
+                        } else {
+                            LockProfileButton.setText("Включить блокировку профиля");
+                        }
                     }
 
                 } else {
