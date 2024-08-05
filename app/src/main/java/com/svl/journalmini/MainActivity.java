@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     public String passphrase = "";
     public boolean ProfilePINUExisting = false;
     public boolean ProfilePINUnlocked = false;
+    public boolean canOperateWithLockState = true;
 
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
@@ -816,6 +817,14 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                     break;
                 case "https://journalui.loophole.site/isPinCorrect":
                     ProcessPinPassword(true);
+                    break;
+                case "https://journalui.loophole.site/phoneLock":
+
+                    try{
+                        JSONObject json = new JSONObject(ReturnValue);
+                        UserInformation.put("phoneLock", json.getBoolean("LockStateNow"));
+                    } catch( Exception e ){Log.e("phoneLockError", String.valueOf(e));}
+                    canOperateWithLockState = true;
                     break;
 
             }

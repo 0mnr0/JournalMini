@@ -26,6 +26,7 @@ public class ProfilePopup {
     private PopupWindow popupWindow;
     private View popupView;
     private MainActivity mainActivity;
+    public boolean AccountLockedByPhone = false;
 
 
     public ProfilePopup(Context context) throws JSONException {
@@ -61,12 +62,20 @@ public class ProfilePopup {
 
         LockProfileButton.setOnClickListener(v -> {
             if (mainActivity.passphrase.length() >= 8) {
-                try {
-                    JSONObject sendingLock = new JSONObject();
-                    sendingLock.put("passPhrase", mainActivity.passphrase);
-                    mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
-                } catch (Exception e) {
-                    Log.e("/phoneLock", String.valueOf(e));
+                if (mainActivity.canOperateWithLockState) {
+                    try {
+                        JSONObject sendingLock = new JSONObject();
+                        AccountLockedByPhone = !AccountLockedByPhone;
+                        sendingLock.put("passPhrase", mainActivity.passphrase);
+                        sendingLock.put("lockstate", AccountLockedByPhone);
+                        closePopup();
+                        mainActivity.canOperateWithLockState = false;
+                        mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
+                    } catch (Exception e) {
+                        Log.e("/phoneLock", String.valueOf(e));
+                    }
+                } else {
+                    mainActivity.showtoast("Узнаём некоторые данные... Попробуйте чуть позже");
                 }
             } else {
                 mainActivity.showtoast("Функции безопасности не готовы. Попробуйте позже");
@@ -131,8 +140,9 @@ public class ProfilePopup {
                     ServerLockedByPin.setVisibility(View.GONE);
                     EnterPinActionButton.setVisibility(View.GONE);
                     LockProfileButton.setVisibility(View.VISIBLE);
-                    Log.d("fullPopupInfo.get('UserInformation')", fullPopupInfo.getString("phoneLock"));
-                    if (fullPopupInfo.get("phoneLock").equals("true")){
+                    AccountLockedByPhone = fullPopupInfo.get("phoneLock").toString().equals("true");
+                    if (AccountLockedByPhone){
+                        LockProfileButton.setVisibility(View.VISIBLE);
                         LockProfileButton.setText("Снять блокировку профиля");
                     } else {
                         if (fullPopupInfo.get("phoneLock").equals("null")){
