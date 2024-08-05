@@ -134,6 +134,8 @@ public class ProfilePopup {
         if (fullPopupInfo != null && !fullPopupInfo.equals("null")){
             Object PinUse = fullPopupInfo.getString("usePin");
             UserPinActive.setVisibility(View.VISIBLE);
+            Log.d("PinUse.equals(\"true\")", PinUse+".equals(\"true\"): "+(PinUse.equals("true")));
+            mainActivity.showtoast(PinUse);
             if (PinUse.equals("true")){
                 UserPinActive.setText("PIN Установлен");
                 if (mainActivity.ProfilePINUnlocked && passPhrase.length() > 8) {
@@ -158,7 +160,9 @@ public class ProfilePopup {
                     LockProfileButton.setVisibility(View.GONE);
                 }
             } else {
+                UserPinActive.setText("PIN Не активен");
                 ServerLockedByPin.setVisibility(View.GONE);
+                LockProfileButton.setVisibility(View.GONE);
                 EnterPinActionButton.setVisibility(View.GONE);
             }
         }

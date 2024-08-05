@@ -144,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         ProfilePINUnlocked = false;
         passphrase = "";
         ProfilePINUExisting = false;
+        canOperateWithLockState = false;
+        UIServerAuth = "null";
+        UserInformation = new JSONObject();
+        userDataToAuth = new JSONObject();
     }
 
     public void CloseStudentImage(View view){
@@ -622,6 +626,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         UserInformation.put("phoneLock", json.get("phoneBlocked"));
         passphrase = json.getString("passphrase");
         UIServerAuth = json.getString("iternalId");
+        canOperateWithLockState = true;
     }
 
 
