@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         Group LoginGroup = findViewById(R.id.EnterGroup);
         LoginGroup.setVisibility(View.VISIBLE);
         ProfilePINUnlocked = false;
+        passphrase = "";
+        ProfilePINUExisting = false;
     }
 
     public void CloseStudentImage(View view){
