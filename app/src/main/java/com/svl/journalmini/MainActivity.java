@@ -1,6 +1,7 @@
 package com.svl.journalmini;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     String UIServerAuth = "null";
     private ProfilePopup profilePopup;
     boolean updateWasShowed = false;
-    private static String passphrase = "";
+    public String passphrase = "";
     public boolean ProfilePINUExisting = false;
     public boolean ProfilePINUnlocked = false;
 
@@ -256,7 +259,15 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         FetchPinValue.put("isItCorrect", txt.getText());
         FetchPinValue.put("passphrase", passphrase);
         Log.w("SendingToPinCheck:", String.valueOf(FetchPinValue));
-        sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+        if (txt.length() > 3) {
+            if (passphrase.length() >= 8) {
+                sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+            } else {
+                showtoast("Функции безопасности не готовы проверить PIN :(");
+            }
+        } else {
+            showtoast("PIN менее чем 4 символов. Введите действительный");
+        }
     }
 
     public void ProfileLocker(){
@@ -600,11 +611,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
     public void ProcessUIServer(JSONObject json) throws JSONException {
         UserInformation = new JSONObject();
-        Log.wtf("WTF_PinUse", String.valueOf(json.getBoolean("PINUse")));
+        Log.wtf("ProcessUIServer", String.valueOf(json));
         if (json.getBoolean("PINUse") != false){
             ProfilePINUExisting = true;
         }
         UserInformation.put("usePin", json.get("PINUse"));
+        UserInformation.put("phoneLock", json.get("phoneBlocked"));
         passphrase = json.getString("passphrase");
         UIServerAuth = json.getString("iternalId");
     }
@@ -633,6 +645,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             ProfilePin.setVisibility(View.GONE);
             tint.setVisibility(View.GONE);
         }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     @SuppressLint("MissingInflatedId")

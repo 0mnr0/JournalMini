@@ -55,6 +55,7 @@ public class UIServerTask extends AsyncTask<Void, Void, String> {
             }
             String encodedToken = URLEncoder.encode(access_Token, StandardCharsets.UTF_8.toString());
             urlConnection.setRequestProperty("Serveruniqid", encodedToken);
+            urlConnection.setRequestProperty("sec-ch-ua-platform", "Android");
 
 
 

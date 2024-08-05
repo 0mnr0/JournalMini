@@ -33,10 +33,6 @@ public class ProfilePopup {
         initPopup();
     }
 
-    public void ProfileLocker(){
-        closePopup();
-        mainActivity.ProfileLocker();
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initPopup() throws JSONException {
@@ -63,11 +59,23 @@ public class ProfilePopup {
         Button AccountExitButton = popupView.findViewById(R.id.ExitButton);
         Button closePoupButton = popupView.findViewById(R.id.closeBtn);
 
-        LockProfileButton.setOnClickListener(v -> { ProfileLocker();});
+        LockProfileButton.setOnClickListener(v -> {
+            if (mainActivity.passphrase.length() >= 8) {
+                try {
+                    JSONObject sendingLock = new JSONObject();
+                    sendingLock.put("passPhrase", mainActivity.passphrase);
+                    mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
+                } catch (Exception e) {
+                    Log.e("/phoneLock", String.valueOf(e));
+                }
+            } else {
+                mainActivity.showtoast("Функции безопасности не готовы. Попробуйте позже");
+            }
+        });
         AccountExitButton.setOnClickListener(v -> { closePopup(); mainActivity.AccountExit(null);});
 
         Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
-        EnterPinActionButton.setOnClickListener(v -> { closePopup(); mainActivity.ProfileLocker();});
+        EnterPinActionButton.setOnClickListener(v -> {closePopup(); mainActivity.ProfileLocker();});
 
 
 
@@ -97,7 +105,10 @@ public class ProfilePopup {
         ConstraintLayout ServerLockedByPin = popupView.findViewById(R.id.PinNotIserted);
         Button LockProfileButton = popupView.findViewById(R.id.LockProfile);
         Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
+        String passPhrase = mainActivity.passphrase;
 
+        Log.d("userDataToAuth", String.valueOf(userDataToAuth));
+        Log.d("fullPopupInfo", String.valueOf(fullPopupInfo));
 
         String full_name_info = null;
         try{
@@ -116,15 +127,25 @@ public class ProfilePopup {
             UserPinActive.setVisibility(View.VISIBLE);
             if (PinUse.equals("true")){
                 UserPinActive.setText("PIN Установлен");
-                if (!mainActivity.ProfilePINUnlocked) {
-                    ServerLockedByPin.setVisibility(View.VISIBLE);
-                    EnterPinActionButton.setVisibility(View.VISIBLE);
-                    LockProfileButton.setVisibility(View.GONE);
-                } else {
+                if (mainActivity.ProfilePINUnlocked && passPhrase.length() > 8) {
                     ServerLockedByPin.setVisibility(View.GONE);
                     EnterPinActionButton.setVisibility(View.GONE);
                     LockProfileButton.setVisibility(View.VISIBLE);
+                    Log.d("fullPopupInfo.get('UserInformation')", (String) fullPopupInfo.get("phoneLock"));
+                    if (fullPopupInfo.getBoolean("phoneLock")){
+                        LockProfileButton.setText("Снять блокировку профиля");
+                    } else {
+                        LockProfileButton.setText("Включить блокировку профиля");
+                    }
+
+                } else {
+                    ServerLockedByPin.setVisibility(View.VISIBLE);
+                    EnterPinActionButton.setVisibility(View.VISIBLE);
+                    LockProfileButton.setVisibility(View.GONE);
                 }
+            } else {
+                ServerLockedByPin.setVisibility(View.GONE);
+                EnterPinActionButton.setVisibility(View.GONE);
             }
         }
 

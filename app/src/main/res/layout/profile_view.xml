@@ -32,6 +32,41 @@
             android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/LockedByPhone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/TextThatDescribeThatProfileWasLockedByPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bgtext_highlight_part2"
+                android:paddingRight="5dp"
+                android:text="Профиль был заблокирован с телефона"
+                android:textColor="#AFAFAF"
+                app:layout_constraintStart_toEndOf="@+id/ImageThatShowingThatProfileWasLockedByPhone"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <ImageView
+                android:id="@+id/ImageThatShowingThatProfileWasLockedByPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bgtext_highlight_part1"
+                android:maxWidth="30dp"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:tint="@color/ActiveButtonBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/TextThatDescribeThatProfileWasLockedByPhone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/lock" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/PinNotIserted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,7 +142,7 @@
             android:padding="14dp"
             android:text="Ввести PIN"
             android:textColor="#FFFFFF"
-            android:visibility="visible"
+            android:visibility="gone"
             app:cornerRadius="10dp"
             app:icon="@drawable/pin_panel"
             app:iconGravity="textStart"
@@ -122,7 +157,7 @@
             android:padding="14dp"
             android:text="Включить блокировку входа"
             android:textColor="#FFFFFF"
-            android:visibility="visible"
+            android:visibility="gone"
             app:cornerRadius="10dp"
             app:icon="@drawable/lock"
             app:iconGravity="textStart"
