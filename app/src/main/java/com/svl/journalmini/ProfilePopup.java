@@ -134,8 +134,6 @@ public class ProfilePopup {
         if (fullPopupInfo != null && !fullPopupInfo.equals("null")){
             Object PinUse = fullPopupInfo.getString("usePin");
             UserPinActive.setVisibility(View.VISIBLE);
-            Log.d("PinUse.equals(\"true\")", PinUse+".equals(\"true\"): "+(PinUse.equals("true")));
-            mainActivity.showtoast(PinUse);
             if (PinUse.equals("true")){
                 UserPinActive.setText("PIN Установлен");
                 if (mainActivity.ProfilePINUnlocked && passPhrase.length() > 8) {
