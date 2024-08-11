@@ -282,6 +282,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             tintEffect(true);
             ConstraintLayout ProfilePin = findViewById(R.id.EnterProfilePin);
             ProfilePin.setVisibility(View.VISIBLE);
+            ProgressBar progressBar = findViewById(R.id.PinCheckingStatus);
+            progressBar.setVisibility(View.GONE);
+            EditText txt = findViewById(R.id.PinInput);
+            txt.setEnabled(true);
+            Button launchCheck = findViewById(R.id.ContinueButton);
+            launchCheck.setEnabled(true);
         } else {
             ProcessPinPassword(true);
         }
