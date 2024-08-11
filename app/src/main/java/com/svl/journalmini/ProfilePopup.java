@@ -59,15 +59,15 @@ public class ProfilePopup {
         Button LockProfileButton = popupView.findViewById(R.id.LockProfile);
         Button AccountExitButton = popupView.findViewById(R.id.ExitButton);
         Button closePoupButton = popupView.findViewById(R.id.closeBtn);
+        Button RemoteUnlock = popupView.findViewById(R.id.RemoteProfileUnlock);
 
         LockProfileButton.setOnClickListener(v -> {
             if (mainActivity.passphrase.length() >= 8) {
                 if (mainActivity.canOperateWithLockState) {
                     try {
                         JSONObject sendingLock = new JSONObject();
-                        AccountLockedByPhone = !AccountLockedByPhone;
                         sendingLock.put("passPhrase", mainActivity.passphrase);
-                        sendingLock.put("lockstate", AccountLockedByPhone);
+                        sendingLock.put("lockstate", true);
                         closePopup();
                         mainActivity.canOperateWithLockState = false;
                         mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
@@ -95,6 +95,27 @@ public class ProfilePopup {
         popupView.setOnTouchListener((v, event) -> true);
         closePoupButton.setOnClickListener(v -> mainActivity.CloseProfilePopup(null));
 
+        RemoteUnlock.setOnClickListener(v -> {
+            if (mainActivity.passphrase.length() >= 8) {
+                if (mainActivity.canOperateWithLockState) {
+                    try {
+                        JSONObject sendingLock = new JSONObject();
+                        sendingLock.put("passPhrase", mainActivity.passphrase);
+                        sendingLock.put("lockstate", false);
+                        closePopup();
+                        mainActivity.canOperateWithLockState = false;
+                        mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
+                    } catch (Exception e) {
+                        Log.e("/phoneLock", String.valueOf(e));
+                    }
+                } else {
+                    mainActivity.showtoast("Узнаём некоторые данные... Попробуйте чуть позже");
+                }
+            } else {
+                mainActivity.showtoast("Функции безопасности не готовы. Попробуйте позже");
+            }
+        });
+
 
         popupWindow.setOnDismissListener(() -> {
             mainActivity.CloseProfilePopup(null);
@@ -114,6 +135,7 @@ public class ProfilePopup {
         ConstraintLayout ServerLockedByPin = popupView.findViewById(R.id.PinNotIserted);
         Button LockProfileButton = popupView.findViewById(R.id.LockProfile);
         Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
+        Button RemoteUnlock = popupView.findViewById(R.id.RemoteProfileUnlock);
         String passPhrase = mainActivity.passphrase;
 
         Log.d("userDataToAuth", String.valueOf(userDataToAuth));
@@ -140,28 +162,23 @@ public class ProfilePopup {
                     ServerLockedByPin.setVisibility(View.GONE);
                     EnterPinActionButton.setVisibility(View.GONE);
                     LockProfileButton.setVisibility(View.VISIBLE);
-                    AccountLockedByPhone = fullPopupInfo.get("phoneLock").toString().equals("true");
-                    if (AccountLockedByPhone){
-                        LockProfileButton.setVisibility(View.VISIBLE);
-                        LockProfileButton.setText("Снять блокировку профиля");
-                    } else {
-                        if (fullPopupInfo.get("phoneLock").equals("null")){
-                            LockProfileButton.setVisibility(View.GONE);
-                        } else {
-                            LockProfileButton.setText("Включить блокировку профиля");
-                        }
-                    }
+                    RemoteUnlock.setVisibility(View.VISIBLE);
+                    LockProfileButton.setVisibility(View.VISIBLE);
+
 
                 } else {
                     ServerLockedByPin.setVisibility(View.VISIBLE);
                     EnterPinActionButton.setVisibility(View.VISIBLE);
                     LockProfileButton.setVisibility(View.GONE);
+                    RemoteUnlock.setVisibility(View.GONE);
+
                 }
             } else {
                 UserPinActive.setText("PIN Не активен");
                 ServerLockedByPin.setVisibility(View.GONE);
                 LockProfileButton.setVisibility(View.GONE);
                 EnterPinActionButton.setVisibility(View.GONE);
+                RemoteUnlock.setVisibility(View.GONE);
             }
         }
 
