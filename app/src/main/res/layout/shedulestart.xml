@@ -11,11 +11,12 @@
 
     <TextView
         android:id="@+id/subject_nameID"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="subject_name"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/started_atID"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="teacher_name"
-        android:textColor="#FFFFFF"
+        android:textColor="#EDFFFFFF"
         app:layout_constraintStart_toStartOf="@+id/subject_nameID"
         app:layout_constraintTop_toBottomOf="@+id/subject_nameID" />
 
@@ -33,7 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="finished_atID"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/started_atID"
@@ -49,5 +51,5 @@
         android:layout_height="wrap_content"
         android:text="room_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/started_atID" />
+        app:layout_constraintTop_toTopOf="@+id/teacher_nameID" />
 </androidx.constraintlayout.widget.ConstraintLayout>
