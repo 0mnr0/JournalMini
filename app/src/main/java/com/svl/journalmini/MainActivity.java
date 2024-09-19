@@ -268,7 +268,16 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         Log.w("SendingToPinCheck:", String.valueOf(FetchPinValue));
         if (txt.length() > 3) {
             if (passphrase.length() >= 8) {
-                sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+                Handler mainHandler = new Handler(this.getMainLooper());
+
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+                    } // This is your code
+                };
+                mainHandler.post(myRunnable);
+
             } else {
                 showtoast("Функции безопасности не готовы проверить PIN :(");
             }
