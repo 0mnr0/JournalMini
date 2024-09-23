@@ -275,13 +275,13 @@
                         android:layout_width="0dp"
                         android:layout_height="12dp"
                         android:layout_marginLeft="4dp"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                        app:layout_constraintBottom_toBottomOf="@+id/AvgMarkDecription"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/AvgProcessDecription"
-                        app:layout_constraintTop_toTopOf="@+id/AvgProcessDecription"
-                        app:rpbBackgroundColor="#254441"
+                        app:layout_constraintStart_toEndOf="@+id/AvgMarkDecription"
+                        app:layout_constraintTop_toTopOf="@+id/AvgMarkDecription"
+                        app:rpbBackgroundColor="#613535"
                         app:rpbCornerRadius="20dp"
-                        app:rpbProgressColor="#43AA8B"
+                        app:rpbProgressColor="#AA4343"
                         app:rpbShowProgressText="false">
 
                     </com.mackhartley.roundedprogressbar.RoundedProgressBar>
@@ -291,20 +291,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.66" />
+                        app:layout_constraintGuide_percent="0.93" />
 
                     <com.mackhartley.roundedprogressbar.RoundedProgressBar
                         android:id="@+id/RoundedAttendanceProgreess"
                         android:layout_width="0dp"
                         android:layout_height="12dp"
                         android:layout_marginLeft="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/AvgProcessDecription"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/AvgMarkDecription"
-                        app:layout_constraintTop_toTopOf="@+id/guideline4"
-                        app:rpbBackgroundColor="#613535"
+                        app:layout_constraintStart_toEndOf="@+id/AvgProcessDecription"
+                        app:layout_constraintTop_toTopOf="@+id/AvgProcessDecription"
+                        app:rpbBackgroundColor="#254441"
                         app:rpbCornerRadius="20dp"
-                        app:rpbProgressColor="#AA4343"
+                        app:rpbProgressColor="#43AA8B"
                         app:rpbShowProgressText="false">
 
                     </com.mackhartley.roundedprogressbar.RoundedProgressBar>
@@ -563,7 +563,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/SheduleSection"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="4dp"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/section_border"

@@ -479,11 +479,8 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             Month = 12;
             Year--;
         }
-        showtoast(Day);
-        Log.w("Fetch?", "Start");
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
-        Log.w("Fetch?", "End");
     }
 
     public void ShowShedulePlus(View view){
