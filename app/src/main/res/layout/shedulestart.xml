@@ -16,7 +16,8 @@
         android:text="subject_name"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/started_atID"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,20 +31,21 @@
         app:layout_constraintTop_toBottomOf="@+id/subject_nameID" />
 
     <TextView
+        android:id="@+id/started_atID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="started_at"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teacher_nameID" />
+
+    <TextView
         android:id="@+id/finished_atID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="finished_atID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/started_atID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="started_at"
-        app:layout_constraintEnd_toStartOf="@+id/finished_atID"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/started_atID"
+        app:layout_constraintTop_toTopOf="@+id/started_atID" />
 
     <TextView
         android:id="@+id/auditoryID"
@@ -51,5 +53,5 @@
         android:layout_height="wrap_content"
         android:text="room_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/teacher_nameID" />
+        app:layout_constraintTop_toTopOf="@+id/finished_atID" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -214,6 +214,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/MainPageLaypout"
         android:layout_width="match_parent"
@@ -613,6 +615,7 @@
                         android:id="@+id/SheduleDayDisplaying"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="SelectDayViaCalendar"
                         android:text="CurrentDate"
                         android:textColor="@color/PassiveButtonForeground"
                         app:layout_constraintBottom_toBottomOf="@+id/PreviousDayShedule"
@@ -663,6 +666,17 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"

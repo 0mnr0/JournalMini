@@ -2,6 +2,8 @@ package com.svl.journalmini;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -21,11 +24,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -35,6 +40,7 @@ import androidx.constraintlayout.widget.Group;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +67,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements LastVersionParser.TextFetchListener {
     Button LoginButton;
@@ -98,6 +106,30 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     public void OpenRepository(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/0mnr0/JournalMini/releases"));
         startActivity(browserIntent);
+    }
+
+
+
+    public void SelectDayViaCalendar(View view) {
+        try {
+            showDatePicker();
+
+            DatePicker datePicker = this.findViewById(R.id.datePicker);
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+            int mnth = Calendar.getInstance().get(Calendar.MONTH);
+            int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+            // Месяц начиная с нуля. Для отображения добавляем 1.
+            datePicker.init(year, mnth, day, (view1, year1, monthOfYear, dayOfMonth) -> {
+
+
+                LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+view1.getYear() + "-" + (view1.getMonth() + 1) + "-" + view1.getDayOfMonth();
+                getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
+                CloseStudentImage(null);
+            });
+        } catch(Exception e){
+            Log.e("DaySelector", String.valueOf(e));
+        }
     }
 
     public void showtoast(Object text){
@@ -153,8 +185,19 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     public void CloseStudentImage(View view){
         ConstraintLayout Const = findViewById(R.id.ViewStudentAvatar);
         Const.setVisibility(View.GONE);
+        DatePicker DatePicker = findViewById(R.id.datePicker);
+        DatePicker.setVisibility(View.GONE);
+    }
+
+    public void showDatePicker(){
+        DatePicker DatePicker = findViewById(R.id.datePicker);
+        DatePicker.setVisibility(View.VISIBLE);
+        ConstraintLayout Const = findViewById(R.id.ViewStudentAvatar);
+        Const.setVisibility(View.VISIBLE);
     }
     public void ShowStudentImage(View view){
+        DatePicker DatePicker = findViewById(R.id.datePicker);
+        DatePicker.setVisibility(View.GONE);
         ConstraintLayout Const = findViewById(R.id.ViewStudentAvatar);
         Const.setVisibility(View.VISIBLE);
         ImageView imagePreview = findViewById(R.id.ShowStudentImage);
@@ -269,7 +312,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         if (txt.length() > 3) {
             if (passphrase.length() >= 8) {
                 Handler mainHandler = new Handler(this.getMainLooper());
-
                 Runnable myRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -277,7 +319,6 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                     } // This is your code
                 };
                 mainHandler.post(myRunnable);
-
             } else {
                 showtoast("Функции безопасности не готовы проверить PIN :(");
             }
@@ -438,8 +479,11 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             Month = 12;
             Year--;
         }
+        showtoast(Day);
+        Log.w("Fetch?", "Start");
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
+        Log.w("Fetch?", "End");
     }
 
     public void ShowShedulePlus(View view){
@@ -485,12 +529,12 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         Group ScheduleDaySelection = findViewById(R.id.ScheduleDaySelection);
         ScheduleDaySelection.setVisibility(View.GONE);
         Button ShowExamsBtn = findViewById(R.id.SheduleAndExams);
+        Log.w("Calling exams switcher", "load");
         if (ShowExamsBtn.getText().equals("Показать экзамены")) {
             ShowExamsBtn.setText("Показать расписание");
             getData("https://msapi.top-academy.ru/api/v2/dashboard/info/future-exams", "GET", null, Access_Token, true);
         } else {
             getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
-
         }
     }
     @SuppressLint("NotifyDataSetChanged")
@@ -601,17 +645,22 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
 
     public void getData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean useCache) {
-        if (JSON == null){JSON = new JSONObject() ;}
+        if (JSON == null){ JSON = new JSONObject() ;}
         sendData(URL, FETCH_TYPE, JSON, Access_Token, useCache);
     }
 
     public void sendData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token, boolean UseCache) {
+        Log.w("sendDataLog", "initFetch");
         SendDataTask sendDataTask = new SendDataTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted, UseCache, this);
+        Log.w("sendDataLog", "FetchLoaded. Starting");
         sendDataTask.execute();
+        Log.w("sendDataLog", "executed");
     }
     public void sendUIData(String URL, String FETCH_TYPE, JSONObject JSON, String Access_Token){
-        UIServerTask sendTask = new UIServerTask(URL, FETCH_TYPE, JSON, Access_Token, this::onTaskCompleted);
-        sendTask.execute();
+
+
+
+
     }
 
     public void OpenLeaderStream(View view){
