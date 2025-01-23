@@ -70,7 +70,8 @@
             android:id="@+id/PinNotIserted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp">
+            android:layout_marginBottom="4dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/PinLocked"
@@ -184,6 +185,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/MonetViewBackground" />
+
+        <TextView
+            android:id="@+id/AccInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Загружаем информацию о профиле..."
+            android:textColor="#FFFFFF" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"

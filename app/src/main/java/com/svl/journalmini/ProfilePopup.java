@@ -3,6 +3,7 @@ package com.svl.journalmini;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.style.IconMarginSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.constraintlayout.widget.Group;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class ProfilePopup {
 
@@ -70,7 +72,7 @@ public class ProfilePopup {
                         sendingLock.put("lockstate", true);
                         closePopup();
                         mainActivity.canOperateWithLockState = false;
-                        mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
+                        mainActivity.sendUIData("https://journalui.ru/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
                     } catch (Exception e) {
                         Log.e("/phoneLock", String.valueOf(e));
                     }
@@ -104,7 +106,7 @@ public class ProfilePopup {
                         sendingLock.put("lockstate", false);
                         closePopup();
                         mainActivity.canOperateWithLockState = false;
-                        mainActivity.sendUIData("https://journalui.loophole.site/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
+                        mainActivity.sendUIData("https://journalui.ru/phoneLock", "POST", sendingLock, mainActivity.UIServerAuth);
                     } catch (Exception e) {
                         Log.e("/phoneLock", String.valueOf(e));
                     }
@@ -137,9 +139,8 @@ public class ProfilePopup {
         Button EnterPinActionButton = popupView.findViewById(R.id.EnterPinAction);
         Button RemoteUnlock = popupView.findViewById(R.id.RemoteProfileUnlock);
         String passPhrase = mainActivity.passphrase;
-
-        Log.d("userDataToAuth", String.valueOf(userDataToAuth));
-        Log.d("fullPopupInfo", String.valueOf(fullPopupInfo));
+        TextView AccInfoView = popupView.findViewById(R.id.AccInfo);
+        JSONObject AccInfo = mainActivity.JournalInfo;
 
         String full_name_info = null;
         try{
@@ -152,8 +153,17 @@ public class ProfilePopup {
             UserNameOnDisplay.setText("Секунду...");
         }
 
+        int points = 0;
+        Log.w("AccInfo is", String.valueOf(AccInfo));
+        if (AccInfo != null && AccInfo.length() != 0) {
+            points = AccInfo.getJSONArray("gaming_points").getJSONObject(0).getInt("points") + AccInfo.getJSONArray("gaming_points").getJSONObject(1).getInt("points");
+        }
+        AccInfoView.setText("Кол-во баллов: "+ points);
+
+
         UserPinActive.setVisibility(View.GONE);
-        if (fullPopupInfo != null && !fullPopupInfo.equals("null")){
+        if (fullPopupInfo != null && !fullPopupInfo.equals("null") && fullPopupInfo.length() != 0){
+            Log.w("fullPopupInfo", String.valueOf(fullPopupInfo));
             Object PinUse = fullPopupInfo.getString("usePin");
             UserPinActive.setVisibility(View.VISIBLE);
             if (PinUse.equals("true")){

@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     int Year;
     int Month;
     int Day;
+    public JSONObject JournalInfo;
     String LastSheduleTime = "{}";
     boolean TimerLaunched = false;
     CircularProgressBar HomeWorkProgress;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
     boolean CanLogin = true;
     boolean VisiblePassword = false;
     JSONObject userDataToAuth = null;
-    JSONObject UserInformation = null;
+    public JSONObject UserInformation = null;
     String UIServerAuth = "null";
     private ProfilePopup profilePopup;
     boolean updateWasShowed = false;
@@ -315,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                 Runnable myRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        sendUIData("https://journalui.loophole.site/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
+                        sendUIData("https://journalui.ru/isPinCorrect", "POST", FetchPinValue, UIServerAuth);
                     } // This is your code
                 };
                 mainHandler.post(myRunnable);
@@ -517,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         AppSettings.set(getApplicationContext(), "ProfileImageLink", AccPhotoURL);
 
         LastSheduleTime="https://msapi.top-academy.ru/api/v2/schedule/operations/get-by-date?date_filter="+Year+"-"+Month+"-"+Day;
-        sendUIData("https://journalui.loophole.site/auth", "POST", userDataToAuth, UIServerAuth);
+        sendUIData("https://journalui.ru/auth", "POST", userDataToAuth, UIServerAuth);
         getData(LastSheduleTime, "GET", new JSONObject(), Access_Token, true);
     }
 
@@ -692,7 +693,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
 
 
     public void ShowProfilePopup(View view) {
-        tintEffect(true);
+        tintEffect(true, false);
         try {
             profilePopup.showPopup(userDataToAuth, UserInformation);
         } catch (JSONException e) {
@@ -716,6 +717,21 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
         }
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public void tintEffect(Boolean show, Boolean NeedInput){
+        ConstraintLayout ProfilePin = findViewById(R.id.EnterProfilePin);
+        TextView tint = findViewById(R.id.tintEffect);
+        if (show) {
+            tint.setVisibility(View.VISIBLE);
+        } else {
+            ProfilePin.setVisibility(View.GONE);
+            tint.setVisibility(View.GONE);
+        }
+        if (NeedInput){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        }
     }
 
     @SuppressLint("MissingInflatedId")
@@ -832,6 +848,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                 case "https://msapi.top-academy.ru/api/v2/settings/user-info":
                     try {
                         JSONObject jsonObject = new JSONObject(ReturnValue);
+                        JournalInfo = jsonObject;
                         SetProfile(jsonObject.getString("photo"), jsonObject.getString("full_name"), jsonObject.getString("group_name"), jsonObject);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -875,16 +892,16 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
                         ProcessExams(String.valueOf(jsonArray));
                     }catch (JSONException ignored) {}
                     break;
-                case "https://journalui.loophole.site/auth":
+                case "https://journalui.ru/auth":
                     try {
                         JSONObject json = new JSONObject(ReturnValue);
                         ProcessUIServer(json);
                     }catch (JSONException e) {Log.e("Loophole Auth", String.valueOf(e));}
                     break;
-                case "https://journalui.loophole.site/isPinCorrect":
+                case "https://journalui.ru/isPinCorrect":
                     ProcessPinPassword(true);
                     break;
-                case "https://journalui.loophole.site/phoneLock":
+                case "https://journalui.ru/phoneLock":
 
                     try{
                         JSONObject json = new JSONObject(ReturnValue);
@@ -910,7 +927,7 @@ public class MainActivity extends AppCompatActivity implements LastVersionParser
             showtoast("Неверное имя пользователя или пароль");
         } else if (ReturnCode == -123) {
             showtoast("Не удалось запустить процедуру проверки");
-        } else if (ReturnCode == 418 && UrlQuestion.equals("https://journalui.loophole.site/isPinCorrect")) {
+        } else if (ReturnCode == 418 && UrlQuestion.equals("https://journalui.ru/isPinCorrect")) {
             showtoast("Неверный PIN");
             ProcessPinPassword(false);
         }
